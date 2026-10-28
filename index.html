@@ -1,1085 +1,438 @@
 <title>Интернет Казахтелеком — BI Group</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
+  theme: {
+    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+    extend: {
+      colors: {
+        border:      'hsl(var(--border))',
+        input:       'hsl(var(--input))',
+        ring:        'hsl(var(--ring))',
+        background:  'hsl(var(--background))',
+        foreground:  'hsl(var(--foreground))',
+        primary:     { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+        secondary:   { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
+        muted:       { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+        accent:      { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))' },
+        card:        { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },
+        destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
+        brand:       { DEFAULT: 'hsl(var(--brand))', foreground: 'hsl(var(--brand-foreground))' },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+    },
+  },
+}
+</script>
 
 <style>
-/* ── Design tokens ─────────────────────────────────────────────── */
-/* Layout: full-bleed hero → card grid → sticky bottom bar on mobile */
+/* ── shadcn/ui design tokens ───────────────────────────── */
 :root {
-  --navy:    #0E2A5C;
-  --navy2:   #16397A;
-  --gold:    #F5A623;
-  --gold2:   #E8940E;
-  --bg:      #F0F3FA;
-  --surface: #FFFFFF;
-  --fg:      #0E1C3A;
-  --muted:   #5A6680;
-  --border:  #DDE3F0;
-  --green:   #1DB87A;
-  --radius:  16px;
-  --font-d:  'Unbounded', sans-serif;
-  --font-b:  'Inter', system-ui, sans-serif;
+  --background:            0 0% 100%;
+  --foreground:            240 10% 3.9%;
+  --card:                  0 0% 100%;
+  --card-foreground:       240 10% 3.9%;
+  --primary:               240 5.9% 10%;
+  --primary-foreground:    0 0% 98%;
+  --secondary:             240 4.8% 95.9%;
+  --secondary-foreground:  240 5.9% 10%;
+  --muted:                 240 4.8% 95.9%;
+  --muted-foreground:      240 3.8% 46.1%;
+  --accent:                240 4.8% 95.9%;
+  --accent-foreground:     240 5.9% 10%;
+  --destructive:           0 84.2% 60.2%;
+  --destructive-foreground:0 0% 98%;
+  --border:                240 5.9% 90%;
+  --input:                 240 5.9% 90%;
+  --ring:                  240 5.9% 10%;
+  --brand:                 221 83% 32%;
+  --brand-foreground:      0 0% 98%;
+  --radius:                0.5rem;
 }
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --navy:    #2A5BBA;
-    --navy2:   #3468CC;
-    --bg:      #0C1220;
-    --surface: #131C30;
-    --fg:      #E8EDF8;
-    --muted:   #8899BB;
-    --border:  #1E2D4A;
+    --background:            240 10% 3.9%;
+    --foreground:            0 0% 98%;
+    --card:                  240 10% 3.9%;
+    --card-foreground:       0 0% 98%;
+    --primary:               0 0% 98%;
+    --primary-foreground:    240 5.9% 10%;
+    --secondary:             240 3.7% 15.9%;
+    --secondary-foreground:  0 0% 98%;
+    --muted:                 240 3.7% 15.9%;
+    --muted-foreground:      240 5% 64.9%;
+    --accent:                240 3.7% 15.9%;
+    --accent-foreground:     0 0% 98%;
+    --destructive:           0 62.8% 30.6%;
+    --destructive-foreground:0 0% 98%;
+    --border:                240 3.7% 15.9%;
+    --input:                 240 3.7% 15.9%;
+    --ring:                  240 4.9% 83.9%;
+    --brand:                 221 83% 55%;
     color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
-  --navy:    #2A5BBA;
-  --navy2:   #3468CC;
-  --bg:      #0C1220;
-  --surface: #131C30;
-  --fg:      #E8EDF8;
-  --muted:   #8899BB;
-  --border:  #1E2D4A;
+[data-theme="dark"] {
+  --background:            240 10% 3.9%;
+  --foreground:            0 0% 98%;
+  --card:                  240 10% 3.9%;
+  --card-foreground:       0 0% 98%;
+  --primary:               0 0% 98%;
+  --primary-foreground:    240 5.9% 10%;
+  --secondary:             240 3.7% 15.9%;
+  --secondary-foreground:  0 0% 98%;
+  --muted:                 240 3.7% 15.9%;
+  --muted-foreground:      240 5% 64.9%;
+  --accent:                240 3.7% 15.9%;
+  --accent-foreground:     0 0% 98%;
+  --destructive:           0 62.8% 30.6%;
+  --destructive-foreground:0 0% 98%;
+  --border:                240 3.7% 15.9%;
+  --input:                 240 3.7% 15.9%;
+  --ring:                  240 4.9% 83.9%;
+  --brand:                 221 83% 55%;
   color-scheme: dark;
 }
 
-/* ── Reset ────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
-html { scroll-behavior: smooth }
 body {
-  font-family: var(--font-b);
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.5;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', system-ui, sans-serif;
+  padding-left: max(0px, env(safe-area-inset-left, 0px));
+  padding-right: max(0px, env(safe-area-inset-right, 0px));
   padding-block: 0;
 }
-img { max-width: 100%; display: block }
-button { font-family: inherit; cursor: pointer; border: none }
-input, select, textarea { font-family: inherit }
 
-/* ── Wrap ─────────────────────────────────────────────────────── */
-.wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  width: 100%;
-}
+/* scrollbar */
+* { scrollbar-width: thin; scrollbar-color: hsl(var(--border)) transparent; }
 
-/* ── NAV ──────────────────────────────────────────────────────── */
-nav {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 50;
-  background: var(--navy);
-  padding-block: 14px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px);
-  z-index: 60;
-  background: var(--navy);
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.nav-logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.nav-logo svg { display: block }
-.nav-names { display: flex; flex-direction: column; line-height: 1.2 }
-.nav-kt {
-  font-family: var(--font-d);
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: .03em;
-}
-.nav-bi { font-size: 11px; color: rgba(255,255,255,.55); }
-.nav-cta {
-  background: var(--gold);
-  color: #0E1C3A;
-  font-weight: 600;
-  font-size: 13px;
-  border-radius: 10px;
-  padding: 9px 18px;
-  white-space: nowrap;
-  transition: background .15s;
-}
-.nav-cta:hover { background: var(--gold2) }
+/* focus ring */
+*:focus-visible { outline: 2px solid hsl(var(--ring)); outline-offset: 2px; }
 
-/* ── HERO ─────────────────────────────────────────────────────── */
-.hero {
-  background: var(--navy);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0;
-  overflow: hidden;
-  position: relative;
+/* ── shadcn component classes ──────────────────────────── */
+
+/* Button */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  white-space: nowrap; border-radius: var(--radius);
+  font-size: .875rem; font-weight: 500; line-height: 1;
+  transition: background .15s, color .15s, opacity .15s;
+  cursor: pointer; border: none;
+  height: 2.5rem; padding: 0 1rem;
 }
-.hero-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: end;
-  min-height: 360px;
+.btn:disabled { opacity: .5; pointer-events: none; }
+.btn-default  { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.btn-default:hover { background: hsl(var(--primary) / .9); }
+.btn-brand    { background: hsl(var(--brand)); color: hsl(var(--brand-foreground)); }
+.btn-brand:hover { filter: brightness(1.1); }
+.btn-secondary{ background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); }
+.btn-secondary:hover { background: hsl(var(--secondary) / .8); }
+.btn-outline  { background: transparent; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); }
+.btn-outline:hover { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
+.btn-ghost    { background: transparent; color: hsl(var(--foreground)); }
+.btn-ghost:hover { background: hsl(var(--accent)); }
+.btn-lg       { height: 2.75rem; padding: 0 1.5rem; font-size: 1rem; }
+.btn-sm       { height: 2rem; padding: 0 .75rem; font-size: .8125rem; }
+.btn-icon     { width: 2.5rem; padding: 0; }
+
+/* Card */
+.card         { border-radius: var(--radius); border: 1px solid hsl(var(--border)); background: hsl(var(--card)); color: hsl(var(--card-foreground)); box-shadow: 0 1px 3px 0 rgb(0 0 0 / .05); }
+.card-header  { padding: 1.5rem 1.5rem .75rem; }
+.card-content { padding: 0 1.5rem 1.5rem; }
+.card-footer  { padding: .75rem 1.5rem 1.5rem; display: flex; align-items: center; gap: .5rem; }
+
+/* Badge */
+.badge        { display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid transparent; padding: .2rem .6rem; font-size: .75rem; font-weight: 600; line-height: 1; }
+.badge-default      { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.badge-secondary    { background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-color: hsl(var(--border)); }
+.badge-brand        { background: hsl(var(--brand) / .1); color: hsl(var(--brand)); border-color: hsl(var(--brand) / .2); }
+.badge-outline      { background: transparent; color: hsl(var(--foreground)); border-color: hsl(var(--border)); }
+.badge-destructive  { background: hsl(var(--destructive) / .1); color: hsl(var(--destructive)); border-color: hsl(var(--destructive) / .2); }
+
+/* Input */
+.input {
+  display: flex; height: 2.5rem; width: 100%;
+  border-radius: var(--radius); border: 1px solid hsl(var(--input));
+  background: hsl(var(--background)); padding: 0 .75rem;
+  font-size: .875rem; color: hsl(var(--foreground));
+  transition: border-color .15s;
+  outline: none;
 }
-.hero-text {
-  padding-block: 60px 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.input::placeholder { color: hsl(var(--muted-foreground)); }
+.input:focus { border-color: hsl(var(--ring)); box-shadow: 0 0 0 2px hsl(var(--ring) / .15); }
+.input.error { border-color: hsl(var(--destructive)); }
+.select-wrap { position: relative; }
+.select-wrap select.input { appearance: none; padding-right: 2rem; cursor: pointer; }
+.select-wrap::after { content: "⌄"; position: absolute; right: .75rem; top: 50%; transform: translateY(-52%); pointer-events: none; font-size: .9rem; color: hsl(var(--muted-foreground)); }
+
+/* Label */
+.label { display: block; font-size: .875rem; font-weight: 500; line-height: 1; color: hsl(var(--foreground)); margin-bottom: .5rem; }
+
+/* Tabs (shadcn style) */
+.tabs-list { display: inline-flex; height: 2.5rem; align-items: center; justify-content: center; border-radius: var(--radius); background: hsl(var(--muted)); padding: .25rem; gap: .25rem; }
+.tab-trigger {
+  display: inline-flex; align-items: center; justify-content: center;
+  white-space: nowrap; border-radius: calc(var(--radius) - 4px);
+  padding: .375rem .75rem; font-size: .875rem; font-weight: 500;
+  background: transparent; border: none; cursor: pointer;
+  color: hsl(var(--muted-foreground)); transition: all .15s;
 }
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.hero-eyebrow-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1 }
-  50% { opacity: .4 }
-}
-h1 {
-  font-family: var(--font-d);
-  font-size: clamp(26px, 4vw, 44px);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #fff;
-  text-wrap: balance;
-}
-h1 span { color: var(--gold) }
-.hero-sub {
-  font-size: 16px;
-  color: rgba(255,255,255,.7);
-  max-width: 440px;
-  line-height: 1.6;
-}
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-}
-.btn-primary {
-  background: var(--gold);
-  color: #0E1C3A;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 12px;
-  padding: 14px 28px;
-  transition: background .15s, transform .1s;
-}
-.btn-primary:hover { background: var(--gold2) }
-.btn-primary:active { transform: scale(.97) }
-.hero-note {
-  font-size: 13px;
-  color: rgba(255,255,255,.5);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hero-visual {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.hero-graphic {
-  width: 100%;
-  max-width: 360px;
-  height: 280px;
-  position: relative;
-}
-/* Abstract building/wifi graphic via CSS */
-.tower-body {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 220px;
-  background: rgba(255,255,255,.07);
-  border-radius: 12px 12px 0 0;
-  border: 1px solid rgba(255,255,255,.12);
-}
-.tower-window {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background: rgba(255,255,255,.15);
-}
-.tower-window.lit { background: var(--gold); opacity: .8 }
-.wifi-arc {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid rgba(245,166,35,.4);
-  transform: translate(-50%, -50%);
-  left: 50%;
+.tab-trigger.active, .tab-trigger[data-state="active"] {
+  background: hsl(var(--background)); color: hsl(var(--foreground));
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);
 }
 
-/* ── PERKS ────────────────────────────────────────────────────── */
-.perks {
-  background: var(--navy2);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0;
-}
-.perks-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  gap: 0;
-}
-.perk {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 18px 20px;
-  border-right: 1px solid rgba(255,255,255,.1);
-  min-width: 0;
-}
-.perk:last-child { border-right: none }
-.perk-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: rgba(245,166,35,.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--gold);
-  font-size: 18px;
-}
-.perk-text { min-width: 0 }
-.perk-title { font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap }
-.perk-desc { font-size: 11px; color: rgba(255,255,255,.5); white-space: nowrap }
+/* Separator */
+.separator { border: none; border-top: 1px solid hsl(var(--border)); }
 
-/* ── SECTION HEAD ─────────────────────────────────────────────── */
-.sec { padding-block: 64px }
-.sec-head {
-  text-align: center;
-  margin-bottom: 40px;
-}
-h2 {
-  font-family: var(--font-d);
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 700;
-  line-height: 1.2;
-  text-wrap: balance;
-}
-.sec-sub {
-  margin-top: 8px;
-  font-size: 15px;
-  color: var(--muted);
-}
+/* Alert */
+.alert { position: relative; border-radius: var(--radius); border: 1px solid hsl(var(--border)); padding: 1rem 1.25rem; background: hsl(var(--card)); }
 
-/* ── FILTER CHIPS ─────────────────────────────────────────────── */
-.filter-row {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
-}
-.chip {
-  padding: 8px 20px;
-  border-radius: 100px;
-  font-size: 14px;
-  font-weight: 500;
-  background: var(--surface);
-  color: var(--muted);
-  border: 1.5px solid var(--border);
-  cursor: pointer;
-  transition: all .15s;
-}
-.chip.active, .chip:hover {
-  background: var(--navy);
-  color: #fff;
-  border-color: var(--navy);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .chip.active,
-  :root:not([data-theme="light"]) .chip:hover {
-    background: var(--navy2);
-    border-color: var(--navy2);
-  }
-}
-:root[data-theme="dark"] .chip.active,
-:root[data-theme="dark"] .chip:hover {
-  background: var(--navy2);
-  border-color: var(--navy2);
-}
-
-/* ── TARIFF GRID ──────────────────────────────────────────────── */
-.tariff-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-.tariff-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1.5px solid var(--border);
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color .15s, box-shadow .15s, transform .1s;
-  display: flex;
-  flex-direction: column;
-}
-.tariff-card:hover {
-  border-color: var(--navy);
-  box-shadow: 0 8px 32px rgba(14,42,92,.12);
-  transform: translateY(-2px);
-}
-.tariff-card.selected {
-  border-color: var(--gold);
-  box-shadow: 0 4px 24px rgba(245,166,35,.2);
-}
-.tariff-card[hidden] { display: none !important }
-.card-top {
-  background: var(--navy);
-  padding: 20px 20px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
-.card-name {
-  font-family: var(--font-d);
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.2;
-}
-.card-speed {
-  font-size: 12px;
-  color: rgba(255,255,255,.6);
-  margin-top: 4px;
-}
-.card-badge {
-  background: var(--gold);
-  color: #0E1C3A;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 100px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 16px }
-.card-features { display: flex; flex-direction: column; gap: 8px }
-.feature {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-.feat-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 14px;
-}
-.feat-icon.wifi { background: rgba(14,42,92,.08); }
-.feat-icon.tv { background: rgba(29,184,122,.1); }
-.feat-icon.sim { background: rgba(245,166,35,.12); }
-.feat-icon.gift { background: rgba(220,53,69,.1); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .feat-icon.wifi { background: rgba(255,255,255,.08) }
-  :root:not([data-theme="light"]) .feat-icon.tv { background: rgba(29,184,122,.15) }
-  :root:not([data-theme="light"]) .feat-icon.sim { background: rgba(245,166,35,.15) }
-}
-:root[data-theme="dark"] .feat-icon.wifi { background: rgba(255,255,255,.08) }
-:root[data-theme="dark"] .feat-icon.tv { background: rgba(29,184,122,.15) }
-:root[data-theme="dark"] .feat-icon.sim { background: rgba(245,166,35,.15) }
-.feat-info { min-width: 0 }
-.feat-name { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .04em }
-.feat-val { font-size: 13px; color: var(--fg); font-weight: 500; line-height: 1.4 }
-.card-price-block { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border) }
-.price-label { font-size: 11px; color: var(--muted); margin-bottom: 4px }
-.price-row { display: flex; align-items: baseline; gap: 8px }
-.price-main {
-  font-family: var(--font-d);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--fg);
-  font-variant-numeric: tabular-nums;
-}
-.price-unit { font-size: 13px; color: var(--muted) }
-.price-promo { font-size: 11px; color: var(--green); font-weight: 600; margin-top: 4px }
-.price-alt { font-size: 12px; color: var(--muted); margin-top: 4px }
-.card-cta {
-  width: 100%;
-  background: var(--gold);
-  color: #0E1C3A;
-  font-weight: 700;
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 12px;
-  margin-top: 12px;
-  transition: background .15s;
-}
-.card-cta:hover { background: var(--gold2) }
-
-/* ── EQUIPMENT NOTE ───────────────────────────────────────────── */
-.equip-note {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  margin-top: 24px;
-  max-width: 680px;
-  margin-inline: auto;
-}
-.equip-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px }
-.equip-text { min-width: 0 }
-.equip-title { font-weight: 600; font-size: 14px; margin-bottom: 4px }
-.equip-desc { font-size: 13px; color: var(--muted); line-height: 1.5 }
-
-/* ── MANAGER BLOCK ────────────────────────────────────────────── */
-.manager {
-  background: var(--navy);
-  border-radius: var(--radius);
-  padding: 32px;
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  max-width: 600px;
-  margin: 40px auto 0;
-}
-.manager-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  flex-shrink: 0;
-}
-.manager-info { flex: 1; min-width: 0 }
-.manager-name { font-weight: 700; font-size: 17px; color: #fff; margin-bottom: 2px }
-.manager-role { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 12px }
-.wa-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #25D366;
-  color: #fff;
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 10px;
-  padding: 10px 20px;
-  text-decoration: none;
-  transition: filter .15s;
-}
-.wa-btn:hover { filter: brightness(1.1) }
-
-/* ── FOOTER ───────────────────────────────────────────────────── */
-footer {
-  background: var(--navy);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 24px;
-  margin-top: 64px;
-}
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.footer-text { font-size: 12px; color: rgba(255,255,255,.45); line-height: 1.6 }
-.footer-walink { font-size: 13px; color: rgba(255,255,255,.6); text-decoration: none; display: flex; align-items: center; gap: 6px }
-.footer-walink:hover { color: #fff }
-
-/* ── STICKY BAR ───────────────────────────────────────────────── */
-.sticky-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0; right: 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  padding-top: 12px;
-  padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  z-index: 40;
-  display: none;
-  gap: 12px;
-  align-items: center;
-  box-shadow: 0 -8px 32px rgba(0,0,0,.08);
-}
-.sticky-bar.visible { display: flex }
-.sticky-info { flex: 1; min-width: 0 }
-.sticky-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.sticky-price { font-size: 12px; color: var(--muted) }
-.sticky-btn {
-  background: var(--gold);
-  color: #0E1C3A;
-  font-weight: 700;
-  font-size: 14px;
-  border-radius: 12px;
-  padding: 12px 22px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background .15s;
-}
-.sticky-btn:hover { background: var(--gold2) }
-
-/* ── MODAL / SHEET ────────────────────────────────────────────── */
+/* Sheet overlay */
 .sheet-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.5);
-  z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s;
-  backdrop-filter: blur(4px);
+  position: fixed; inset: 0; z-index: 50;
+  background: rgb(0 0 0 / .8);
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s;
 }
-.sheet-overlay.open { opacity: 1; pointer-events: all }
+.sheet-overlay.open { opacity: 1; pointer-events: all; }
+
+/* Sheet */
 .sheet {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  max-height: 92dvh;
-  overflow-y: auto;
-  z-index: 101;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 51;
+  background: hsl(var(--background));
+  border-radius: 1rem 1rem 0 0;
+  border: 1px solid hsl(var(--border));
+  border-bottom: none;
+  max-height: 92dvh; overflow-y: auto;
   transform: translateY(100%);
   transition: transform .3s cubic-bezier(.32,.72,0,1);
-  padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
 }
-.sheet.open { transform: translateY(0) }
+.sheet.open { transform: translateY(0); }
 @media (min-width: 640px) {
-  .sheet {
-    max-width: 520px;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%) translateY(100%);
-    border-radius: 20px 20px 0 0;
-  }
-  .sheet.open { transform: translateX(-50%) translateY(0) }
-}
-.sheet-handle {
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border);
-  margin: 14px auto 0;
-}
-.sheet-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px 0;
-  gap: 12px;
-}
-.sheet-head h3 {
-  font-family: var(--font-d);
-  font-size: 18px;
-  font-weight: 700;
-}
-.sheet-close {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: var(--muted);
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: background .15s;
-}
-.sheet-close:hover { background: var(--border) }
-.sheet-body { padding: 20px 24px 0 }
-.tariff-summary {
-  background: var(--bg);
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.ts-name { font-weight: 600; font-size: 14px }
-.ts-price {
-  font-family: var(--font-d);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--gold2);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-.ts-change {
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: underline;
-  cursor: pointer;
-  margin-top: 2px;
-  display: block;
+  .sheet { max-width: 500px; left: 50%; right: auto; border-radius: 1rem 1rem 0 0; transform: translateX(-50%) translateY(100%); }
+  .sheet.open { transform: translateX(-50%) translateY(0); }
 }
 
-/* Contract toggle */
-.contract-toggle {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
+/* Sticky bar */
+.sticky-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  background: hsl(var(--background) / .95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid hsl(var(--border));
+  padding: .75rem max(1rem, env(safe-area-inset-right, 0px)) max(.75rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+  display: none; gap: .75rem; align-items: center;
 }
-.ct-btn {
-  flex: 1;
-  padding: 10px 8px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all .15s;
-  text-align: center;
-}
-.ct-btn.active {
-  border-color: var(--navy);
-  color: var(--navy);
-  background: rgba(14,42,92,.06);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .ct-btn.active {
-    border-color: var(--navy2);
-    color: #fff;
-    background: rgba(52,104,204,.2);
-  }
-}
-:root[data-theme="dark"] .ct-btn.active {
-  border-color: var(--navy2);
-  color: #fff;
-  background: rgba(52,104,204,.2);
-}
-.ct-discount {
-  font-size: 11px;
-  color: var(--green);
-  font-weight: 600;
-  display: block;
-  margin-top: 2px;
-}
+.sticky-bar.visible { display: flex; }
 
-/* Form fields */
-.form-group { margin-bottom: 16px }
-.form-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.form-input, .form-select {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--fg);
-  font-size: 15px;
-  outline: none;
-  transition: border-color .15s;
-  appearance: none;
-  -webkit-appearance: none;
-}
-.form-input:focus, .form-select:focus { border-color: var(--navy) }
-.form-input.error, .form-select.error { border-color: #E53E3E }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
-.form-err { font-size: 12px; color: #E53E3E; margin-top: 4px; display: none }
-.form-err.show { display: block }
-.select-wrap { position: relative }
-.select-wrap::after {
-  content: "▾";
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--muted);
-  font-size: 14px;
-}
-.form-select { padding-right: 36px }
-.consent-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 16px }
-.consent-row input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  border: 1.5px solid var(--border);
-  flex-shrink: 0;
-  margin-top: 2px;
-  cursor: pointer;
-  accent-color: var(--navy);
-}
-.consent-text { font-size: 13px; color: var(--muted); line-height: 1.5 }
-.submit-btn {
-  width: 100%;
-  background: var(--navy);
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 12px;
-  padding: 15px;
-  transition: background .15s, transform .1s;
-}
-.submit-btn:hover { background: var(--navy2) }
-.submit-btn:active { transform: scale(.98) }
-.submit-btn:disabled { opacity: .5; cursor: not-allowed }
-.net-err { display: none; background: rgba(229,62,62,.1); border: 1px solid rgba(229,62,62,.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #C53030; margin-bottom: 12px }
-.net-err.show { display: block }
+/* Error text */
+.err-text { display: none; font-size: .75rem; color: hsl(var(--destructive)); margin-top: .25rem; }
+.err-text.show { display: block; }
 
-/* Success state */
-.sheet-success {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 40px 24px;
-  gap: 16px;
-}
-.sheet-success.show { display: flex }
-.success-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(29,184,122,.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-}
-.success-title {
-  font-family: var(--font-d);
-  font-size: 22px;
-  font-weight: 700;
-}
-.success-desc { font-size: 15px; color: var(--muted); line-height: 1.6 }
-.success-steps {
-  background: var(--bg);
-  border-radius: 12px;
-  padding: 16px 20px;
-  width: 100%;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.step-item { display: flex; gap: 12px; align-items: flex-start }
-.step-num {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--navy);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-}
-.step-txt { font-size: 13px; line-height: 1.5 }
-.step-title { font-weight: 600 }
-.done-btn {
-  background: var(--gold);
-  color: #0E1C3A;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 12px;
-  padding: 14px 32px;
-  transition: background .15s;
-}
-.done-btn:hover { background: var(--gold2) }
+/* Checkbox */
+input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height: 1rem; cursor: pointer; flex-shrink: 0; }
 
-/* ── RESPONSIVE ───────────────────────────────────────────────── */
-@media (max-width: 720px) {
-  .hero-inner { grid-template-columns: 1fr; min-height: auto }
-  .hero-visual { display: none }
-  .hero-text { padding-block: 40px 32px }
-  .perks-inner { flex-direction: column }
-  .perk { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); padding: 14px 0 }
-  .perk:last-child { border-bottom: none }
-  .tariff-grid { grid-template-columns: 1fr }
-  .manager { flex-direction: column; text-align: center }
-  .footer-inner { flex-direction: column; gap: 8px }
-  .form-row { grid-template-columns: 1fr }
-}
-@media (max-width: 480px) {
-  .nav-cta { display: none }
-  .sticky-bar { display: flex }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important }
-}
+/* Selected card */
+.tariff-card.selected { border-color: hsl(var(--brand)); box-shadow: 0 0 0 1px hsl(var(--brand) / .5), 0 4px 16px hsl(var(--brand) / .1); }
+
+/* Success steps */
+.step-row { display: flex; gap: .75rem; align-items: flex-start; }
+.step-dot { width: 1.5rem; height: 1.5rem; border-radius: 9999px; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); font-size: .7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 </style>
 
-<!-- ── NAV ──────────────────────────────────────────────────────── -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-brand" aria-label="Казахтелеком для BI Group">
-      <div class="nav-logo">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 2C10 2 4 5.5 4 10.5C4 13.5 6.7 16 10 16C13.3 16 16 13.5 16 10.5C16 5.5 10 2 10 2Z" fill="#0E2A5C" opacity=".9"/>
-          <circle cx="10" cy="10.5" r="2.5" fill="#0E2A5C"/>
-          <path d="M7 9C7.5 7 8.7 5.5 10 4.5" stroke="#0E2A5C" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
-          <path d="M13 9C12.5 7 11.3 5.5 10 4.5" stroke="#0E2A5C" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
-        </svg>
+<!-- ── HEADER ─────────────────────────────────────────────────── -->
+<header class="sticky top-0 z-30 w-full border-b border-border bg-background/95 backdrop-blur-sm" style="top: env(safe-area-inset-top, 0px)">
+  <div style="height: env(safe-area-inset-top,0); position:fixed; inset:0 0 auto; background:hsl(var(--background)); z-index:31"></div>
+  <div class="max-w-5xl mx-auto flex h-14 items-center justify-between px-4">
+    <div class="flex items-center gap-3">
+      <div class="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-foreground font-bold text-xs flex-shrink-0">KT</div>
+      <div class="flex flex-col leading-tight">
+        <span class="text-sm font-semibold text-foreground">Казахтелеком</span>
+        <span class="text-xs text-muted-foreground">для жителей BI Group</span>
       </div>
-      <div class="nav-names">
-        <span class="nav-kt">Казахтелеком</span>
-        <span class="nav-bi">для жителей BI Group</span>
-      </div>
-    </a>
-    <button class="nav-cta" onclick="openSheet(null)">Оформить заявку</button>
+    </div>
+    <button class="btn btn-default hidden sm:inline-flex" onclick="openSheet(null)">Оформить заявку</button>
   </div>
-</nav>
+</header>
 
-<!-- ── HERO ────────────────────────────────────────────────────── -->
-<section class="hero">
-  <div class="hero-inner wrap">
-    <div class="hero-text">
-      <span class="hero-eyebrow">
-        <span class="hero-eyebrow-dot"></span>
-        Сеть уже проведена в дом
+<!-- ── HERO ──────────────────────────────────────────────────────── -->
+<section class="border-b border-border bg-muted/30">
+  <div class="max-w-5xl mx-auto px-4 py-16 flex flex-col items-start gap-6 md:py-24">
+    <div class="flex items-center gap-2">
+      <span class="badge badge-brand">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand mr-1.5 animate-pulse inline-block"></span>
+        Сеть проведена в дом
       </span>
-      <h1>Интернет уже<br><span>в вашем доме</span></h1>
-      <p class="hero-sub">Осталось выбрать тариф. Подключение бесплатное, данные заполнятся автоматически из BIG&nbsp;App.</p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="scrollToTariffs()">Выбрать тариф</button>
-        <span class="hero-note">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/><path d="M8 5V8.5L10 10" stroke="rgba(255,255,255,.5)" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Подключение бесплатно
-        </span>
-      </div>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="hero-graphic">
-        <!-- Abstract building -->
-        <div class="tower-body">
-          <div class="tower-window lit" style="top:20px;left:16px"></div>
-          <div class="tower-window" style="top:20px;left:42px"></div>
-          <div class="tower-window lit" style="top:20px;left:68px"></div>
-          <div class="tower-window" style="top:48px;left:16px"></div>
-          <div class="tower-window lit" style="top:48px;left:42px"></div>
-          <div class="tower-window" style="top:48px;left:68px"></div>
-          <div class="tower-window lit" style="top:76px;left:16px"></div>
-          <div class="tower-window lit" style="top:76px;left:42px"></div>
-          <div class="tower-window" style="top:76px;left:68px"></div>
-          <div class="tower-window" style="top:104px;left:16px"></div>
-          <div class="tower-window lit" style="top:104px;left:42px"></div>
-          <div class="tower-window lit" style="top:104px;left:68px"></div>
-          <div class="tower-window lit" style="top:132px;left:16px"></div>
-          <div class="tower-window" style="top:132px;left:42px"></div>
-          <div class="tower-window lit" style="top:132px;left:68px"></div>
-          <div class="tower-window lit" style="top:160px;left:16px"></div>
-          <div class="tower-window lit" style="top:160px;left:42px"></div>
-          <div class="tower-window lit" style="top:160px;left:68px"></div>
-        </div>
-        <!-- Wifi arcs -->
-        <div class="wifi-arc" style="width:60px;height:60px;top:56px;left:50%;margin-left:-30px;opacity:.8"></div>
-        <div class="wifi-arc" style="width:100px;height:100px;top:36px;left:50%;margin-left:-50px;opacity:.5"></div>
-        <div class="wifi-arc" style="width:150px;height:150px;top:11px;left:50%;margin-left:-75px;opacity:.3"></div>
+    <h1 class="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
+      Интернет уже<br>в вашем доме
+    </h1>
+    <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
+      Осталось выбрать тариф. Подключение бесплатное, данные заполнятся автоматически из BIG&nbsp;App.
+    </p>
+    <div class="flex flex-wrap items-center gap-3">
+      <button class="btn btn-brand btn-lg" onclick="scrollToTariffs()">Выбрать тариф</button>
+      <button class="btn btn-outline btn-lg" onclick="openSheet(null)">Оформить заявку</button>
+    </div>
+    <div class="flex flex-wrap gap-x-6 gap-y-2 pt-2">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <svg class="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Подключение бесплатно
+      </div>
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <svg class="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Скидка 50% в первый месяц
+      </div>
+      <div class="flex items-center gap-2 text-sm text-muted-foreground">
+        <svg class="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        Данные из BIG App
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── PERKS ────────────────────────────────────────────────────── -->
-<div class="perks">
-  <div class="perks-inner">
-    <div class="perk">
-      <div class="perk-icon">⚡</div>
-      <div class="perk-text">
-        <div class="perk-title">Бесплатное подключение</div>
-        <div class="perk-desc">Техник проведёт кабель в квартиру</div>
-      </div>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">📱</div>
-      <div class="perk-text">
-        <div class="perk-title">Данные из BIG App</div>
-        <div class="perk-desc">ФИО и адрес заполнятся автоматически</div>
-      </div>
-    </div>
-    <div class="perk">
-      <div class="perk-icon">🎁</div>
-      <div class="perk-text">
-        <div class="perk-title">Скидка 50% в 1-й месяц</div>
-        <div class="perk-desc">На тарифах с контрактом</div>
-      </div>
-    </div>
+<!-- ── TARIFFS ────────────────────────────────────────────────────── -->
+<section class="max-w-5xl mx-auto px-4 py-14" id="tariffs">
+  <div class="flex flex-col gap-2 mb-8">
+    <h2 class="text-2xl font-bold tracking-tight">Тарифы</h2>
+    <p class="text-muted-foreground">Все тарифы включают безлимитный интернет</p>
   </div>
-</div>
 
-<!-- ── TARIFFS ──────────────────────────────────────────────────── -->
-<section class="sec" id="tariffs">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Выберите тариф</h2>
-      <p class="sec-sub">Все тарифы включают безлимитный интернет</p>
-    </div>
+  <!-- Tabs -->
+  <div class="tabs-list mb-8 flex-wrap h-auto gap-1" id="filterTabs" role="tablist">
+    <button class="tab-trigger active" data-filter="all" onclick="setFilter('all',this)" role="tab">Все</button>
+    <button class="tab-trigger" data-filter="contract" onclick="setFilter('contract',this)" role="tab">С контрактом</button>
+    <button class="tab-trigger" data-filter="nocontract" onclick="setFilter('nocontract',this)" role="tab">Без контракта</button>
+    <button class="tab-trigger" data-filter="promo" onclick="setFilter('promo',this)" role="tab">Акции</button>
+  </div>
 
-    <div class="filter-row" role="group" aria-label="Фильтр тарифов">
-      <button class="chip active" data-filter="all" onclick="setFilter('all',this)">Все тарифы</button>
-      <button class="chip" data-filter="contract" onclick="setFilter('contract',this)">С контрактом</button>
-      <button class="chip" data-filter="nocontract" onclick="setFilter('nocontract',this)">Без контракта</button>
-      <button class="chip" data-filter="promo" onclick="setFilter('promo',this)">Акционные</button>
-    </div>
+  <!-- Cards -->
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="tariffGrid"></div>
 
-    <div class="tariff-grid" id="tariffGrid">
-      <!-- Cards injected by JS -->
-    </div>
-
-    <div class="equip-note">
-      <div class="equip-icon">ℹ️</div>
-      <div class="equip-text">
-        <div class="equip-title">Аренда оборудования</div>
-        <div class="equip-desc">Wi-Fi модем — 414&nbsp;₸/мес, ТВ-приставка — 517&nbsp;₸/мес (если телевизор не Smart&nbsp;TV). Оплачивается отдельно.</div>
-      </div>
-    </div>
-
-    <div class="manager">
-      <div class="manager-avatar">👩‍💼</div>
-      <div class="manager-info">
-        <div class="manager-name">Гульдана</div>
-        <div class="manager-role">Менеджер Казахтелекома — поможет выбрать тариф</div>
-        <a href="https://wa.me/77000000000" class="wa-btn" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Написать в WhatsApp
-        </a>
-      </div>
+  <!-- Equipment note -->
+  <div class="alert mt-6 flex gap-3 items-start">
+    <svg class="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+    <div>
+      <p class="text-sm font-medium">Аренда оборудования</p>
+      <p class="text-sm text-muted-foreground mt-0.5">Wi‑Fi модем — 414&nbsp;₸/мес, ТВ‑приставка — 517&nbsp;₸/мес (если телевизор не Smart TV). Оплачивается отдельно.</p>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ───────────────────────────────────────────────────── -->
-<footer>
-  <div class="footer-inner">
-    <p class="footer-text">Услуги оказывает АО «Казахтелеком».<br>Заявку передаёт BI Group через BIG App.</p>
-    <a href="https://wa.me/77000000000" class="footer-walink" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<hr class="separator max-w-5xl mx-auto">
+
+<!-- ── MANAGER ────────────────────────────────────────────────────── -->
+<section class="max-w-5xl mx-auto px-4 py-14">
+  <div class="card max-w-md">
+    <div class="card-header flex items-center gap-4 pb-4">
+      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-2xl flex-shrink-0">👩‍💼</div>
+      <div>
+        <p class="font-semibold">Гульдана</p>
+        <p class="text-sm text-muted-foreground">Менеджер Казахтелекома</p>
+      </div>
+    </div>
+    <div class="card-content">
+      <p class="text-sm text-muted-foreground mb-4">Поможет выбрать тариф и ответит на вопросы</p>
+      <a href="https://wa.me/77000000000" class="btn btn-default w-full justify-center gap-2" target="_blank" rel="noopener" style="text-decoration:none">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Написать в WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer class="border-t border-border">
+  <div class="max-w-5xl mx-auto px-4 py-8 flex flex-wrap items-center justify-between gap-4">
+    <p class="text-sm text-muted-foreground">Услуги оказывает АО «Казахтелеком». Заявку передаёт BI Group через BIG App.</p>
+    <a href="https://wa.me/77000000000" class="text-sm text-muted-foreground hover:text-foreground transition-colors" target="_blank" rel="noopener">
       Связаться с менеджером
     </a>
   </div>
 </footer>
 
-<!-- ── STICKY BOTTOM BAR ────────────────────────────────────────── -->
-<div class="sticky-bar" id="stickyBar" aria-label="Выбранный тариф">
-  <div class="sticky-info">
-    <div class="sticky-name" id="stickyName">Выберите тариф</div>
-    <div class="sticky-price" id="stickyPrice"></div>
+<!-- ── STICKY BAR (mobile) ────────────────────────────────────────── -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="flex-1 min-w-0">
+    <div class="text-sm font-semibold truncate" id="stickyName">Выберите тариф</div>
+    <div class="text-xs text-muted-foreground" id="stickyPrice"></div>
   </div>
-  <button class="sticky-btn" id="stickyBtn" onclick="openSheet(null)">Оформить заявку</button>
+  <button class="btn btn-brand flex-shrink-0" onclick="openSheet(null)">Оформить заявку</button>
 </div>
 
-<!-- ── SHEET / MODAL ────────────────────────────────────────────── -->
+<!-- ── SHEET OVERLAY ──────────────────────────────────────────────── -->
 <div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+
+<!-- ── SHEET ──────────────────────────────────────────────────────── -->
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-  <div class="sheet-handle"></div>
+  <div class="flex justify-center pt-3 pb-1">
+    <div class="w-10 h-1 rounded-full bg-border"></div>
+  </div>
 
   <!-- FORM VIEW -->
   <div id="formView">
-    <div class="sheet-head">
-      <h3 id="sheetTitle">Заявка на подключение</h3>
-      <button class="sheet-close" onclick="closeSheet()" aria-label="Закрыть">✕</button>
+    <div class="flex items-center justify-between px-6 pt-4 pb-2">
+      <h2 id="sheetTitle" class="text-lg font-semibold">Заявка на подключение</h2>
+      <button class="btn btn-ghost btn-icon rounded-full text-muted-foreground hover:text-foreground" onclick="closeSheet()" aria-label="Закрыть">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
-    <div class="sheet-body">
 
+    <div class="px-6 pb-6 flex flex-col gap-5">
       <!-- Tariff summary -->
-      <div class="tariff-summary">
+      <div class="flex items-center justify-between rounded-lg border border-border bg-muted/50 px-4 py-3">
         <div>
-          <div class="ts-name" id="tsSummaryName">—</div>
-          <button class="ts-change" onclick="closeSheet()">Изменить тариф</button>
+          <div class="text-sm font-semibold" id="tsSummaryName">—</div>
+          <button class="text-xs text-muted-foreground underline underline-offset-2 mt-0.5 bg-transparent border-none cursor-pointer p-0" onclick="closeSheet()">Изменить тариф</button>
         </div>
-        <div class="ts-price" id="tsSummaryPrice"></div>
+        <div class="text-base font-bold text-brand" id="tsSummaryPrice"></div>
       </div>
 
-      <!-- Contract toggle (shown only when tariff has both) -->
-      <div class="contract-toggle" id="contractToggle" hidden>
-        <button class="ct-btn active" id="ctContract" onclick="setPayment('contract')">
-          С контрактом (3 года)
-          <span class="ct-discount">Скидка 50% в 1-й месяц</span>
-        </button>
-        <button class="ct-btn" id="ctNoContract" onclick="setPayment('nocontract')">
-          Без контракта
-        </button>
+      <!-- Contract toggle -->
+      <div id="contractToggle" hidden>
+        <div class="tabs-list w-full h-auto">
+          <button class="tab-trigger flex-1 active" id="ctContract" onclick="setPayment('contract')">
+            С контрактом
+            <span class="ml-1 badge badge-brand text-[10px] py-0">−50%</span>
+          </button>
+          <button class="tab-trigger flex-1" id="ctNoContract" onclick="setPayment('nocontract')">
+            Без контракта
+          </button>
+        </div>
+        <p class="text-xs text-muted-foreground mt-1.5">С контрактом на 3 года — скидка 50% в первый месяц</p>
       </div>
 
-      <form id="appForm" novalidate>
-        <div class="form-group">
-          <label class="form-label" for="fFio">ФИО</label>
-          <input class="form-input" id="fFio" name="fio" type="text" placeholder="Иванов Иван Иванович" autocomplete="name">
-          <div class="form-err" id="eFio">Укажите фамилию, имя и отчество</div>
+      <hr class="separator">
+
+      <form id="appForm" novalidate class="flex flex-col gap-4">
+        <div>
+          <label class="label" for="fFio">ФИО</label>
+          <input class="input" id="fFio" name="fio" type="text" placeholder="Иванов Иван Иванович" autocomplete="name">
+          <div class="err-text" id="eFio">Укажите фамилию и имя</div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="fIin">ИИН</label>
-          <input class="form-input" id="fIin" name="iin" type="text" inputmode="numeric" maxlength="12" placeholder="123456789012">
-          <div class="form-err" id="eIin">ИИН состоит из 12 цифр</div>
+        <div>
+          <label class="label" for="fIin">ИИН</label>
+          <input class="input" id="fIin" name="iin" type="text" inputmode="numeric" maxlength="12" placeholder="123456789012">
+          <div class="err-text" id="eIin">ИИН состоит ровно из 12 цифр</div>
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="fZk">Жилой комплекс</label>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="label" for="fZk">Жилой комплекс</label>
             <div class="select-wrap">
-              <select class="form-select" id="fZk" name="zk">
+              <select class="input" id="fZk" name="zk">
                 <option value="">Выберите ЖК</option>
                 <option value="auez1">Auez Comfort 1</option>
                 <option value="auez2">Auez Comfort 2</option>
@@ -1088,264 +441,188 @@ footer {
                 <option value="modstyle">MOD Style</option>
               </select>
             </div>
-            <div class="form-err" id="eZk">Выберите жилой комплекс</div>
+            <div class="err-text" id="eZk">Выберите ЖК</div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="fFlat">Квартира</label>
-            <input class="form-input" id="fFlat" name="flat" type="text" inputmode="numeric" placeholder="42">
-            <div class="form-err" id="eFlat">Укажите номер</div>
+          <div>
+            <label class="label" for="fFlat">Квартира</label>
+            <input class="input" id="fFlat" name="flat" type="text" inputmode="numeric" placeholder="42">
+            <div class="err-text" id="eFlat">Укажите номер</div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="fBlock">Блок / подъезд</label>
-          <input class="form-input" id="fBlock" name="block" type="text" placeholder="Блок А или подъезд 2">
+        <div>
+          <label class="label" for="fBlock">Блок / подъезд</label>
+          <input class="input" id="fBlock" name="block" type="text" placeholder="Блок А или подъезд 2">
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="fPhone">Номер для звонка менеджера</label>
-          <input class="form-input" id="fPhone" name="phone" type="tel" inputmode="tel" placeholder="+7 700 000 00 00" autocomplete="tel">
-          <div class="form-err" id="ePhone">Введите номер в формате +7 7XX XXX XX XX</div>
+        <div>
+          <label class="label" for="fPhone">Номер для звонка</label>
+          <input class="input" id="fPhone" name="phone" type="tel" inputmode="tel" placeholder="+7 700 000 00 00" autocomplete="tel">
+          <div class="err-text" id="ePhone">Введите номер в формате +7 7XX XXX XX XX</div>
         </div>
 
-        <div class="consent-row">
-          <input type="checkbox" id="fConsent" name="consent">
-          <label class="consent-text" for="fConsent">
+        <div class="flex items-start gap-2.5">
+          <input type="checkbox" id="fConsent" class="mt-0.5">
+          <label for="fConsent" class="text-sm text-muted-foreground leading-relaxed cursor-pointer">
             Согласен(на) на обработку персональных данных и их передачу АО «Казахтелеком» для подключения услуг
           </label>
         </div>
-        <div class="form-err" id="eConsent" style="margin-top:-8px;margin-bottom:12px">Отметьте согласие, чтобы отправить заявку</div>
+        <div class="err-text -mt-2" id="eConsent">Отметьте согласие для отправки</div>
 
-        <div class="net-err" id="netErr">Заявка не отправилась. Проверьте интернет и нажмите «Отправить» ещё раз.</div>
+        <div class="hidden rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-sm text-destructive" id="netErr">
+          Заявка не отправилась. Проверьте интернет и попробуйте ещё раз.
+        </div>
 
-        <button type="submit" class="submit-btn" id="submitBtn">Отправить заявку</button>
+        <button type="submit" class="btn btn-default btn-lg w-full justify-center" id="submitBtn">
+          Отправить заявку
+        </button>
       </form>
     </div>
   </div>
 
   <!-- SUCCESS VIEW -->
-  <div class="sheet-success" id="successView">
-    <div class="success-icon">✅</div>
-    <h2 class="success-title">Заявка отправлена!</h2>
-    <p class="success-desc">Менеджер Казахтелекома свяжется с вами в ближайшее время для уточнения деталей.</p>
-    <div class="success-steps">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-txt"><span class="step-title">Звонок менеджера</span><br>Уточнение деталей и времени</div>
+  <div id="successView" class="hidden flex-col items-center text-center gap-5 px-6 py-10">
+    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-3xl">✅</div>
+    <div>
+      <h2 class="text-xl font-bold">Заявка отправлена!</h2>
+      <p class="text-sm text-muted-foreground mt-1.5 leading-relaxed">Менеджер Казахтелекома свяжется с вами в ближайшее время.</p>
+    </div>
+    <div class="w-full rounded-lg border border-border bg-muted/50 p-4 text-left flex flex-col gap-3">
+      <div class="step-row">
+        <div class="step-dot">1</div>
+        <div><p class="text-sm font-medium">Звонок менеджера</p><p class="text-xs text-muted-foreground">Уточнение деталей и времени</p></div>
       </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-txt"><span class="step-title">Подключение</span><br>Техник проведёт интернет в квартиру. Бесплатно.</div>
+      <div class="step-row">
+        <div class="step-dot">2</div>
+        <div><p class="text-sm font-medium">Подключение</p><p class="text-xs text-muted-foreground">Техник проведёт интернет. Бесплатно.</p></div>
       </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-txt"><span class="step-title">Первый месяц</span><br>Скидка 50% для тарифов с контрактом</div>
+      <div class="step-row">
+        <div class="step-dot">3</div>
+        <div><p class="text-sm font-medium">Первый месяц</p><p class="text-xs text-muted-foreground">Скидка 50% для тарифов с контрактом</p></div>
       </div>
     </div>
-    <button class="done-btn" onclick="closeSheet()">Отлично!</button>
+    <button class="btn btn-default btn-lg" onclick="closeSheet()">Готово</button>
   </div>
 </div>
 
 <script>
-// ── CONFIG: Replace with your Google Apps Script Web App URL ──────────
-// 1. Create Google Sheet
-// 2. Extensions → Apps Script → paste code from README below
-// 3. Deploy → New deployment → Web app → Execute as: Me, Access: Anyone
-// 4. Copy the URL and paste it here:
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3pjElGpg3l6_icEEoir15Ga3uYRNcSOltMLbQYAIS-t4Ri3TdTp3YoN5u8uM9_WrBhQ/exec';
 
-// ── TARIFF DATA ───────────────────────────────────────────────────────
 const TARIFFS = [
-  {
-    id: 'bereket4',
-    name: 'BEREKET 4',
-    speed: 500,
-    badge: 'Топовый',
-    contract: 16999,
-    nocontract: 17999,
-    discount: true,
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '500 Мб/с, безлимит' },
-      { type: 'tv', icon: '📺', name: 'Телевидение', val: 'TV+, 150+ телеканалов, 8 онлайн-кинотеатров' },
-      { type: 'sim', icon: '📱', name: 'Мобильная связь', val: '4 SIM по 60 ГБ, безлимит внутри Activ и Altel' }
-    ]
-  },
-  {
-    id: 'bereket2',
-    name: 'BEREKET 2',
-    speed: 500,
-    badge: 'Популярный',
-    contract: 12999,
-    nocontract: 13999,
-    discount: true,
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '500 Мб/с, безлимит' },
-      { type: 'tv', icon: '📺', name: 'Телевидение', val: 'TV+, 150+ телеканалов, 8 онлайн-кинотеатров' },
-      { type: 'sim', icon: '📱', name: 'Мобильная связь', val: '2 SIM по 60 ГБ, безлимит внутри Activ и Altel' }
-    ]
-  },
-  {
-    id: 'keremet_mobile',
-    name: 'KEREMET MOBILE',
-    speed: 500,
-    contract: 9999,
-    nocontract: 10999,
-    discount: true,
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '500 Мб/с, безлимит' },
-      { type: 'sim', icon: '📱', name: 'Мобильная связь', val: '1 SIM: 100/60 ГБ Activ/Altel, безлимит внутри, 250 мин на другие сети' }
-    ]
-  },
-  {
-    id: 'keremet_tv',
-    name: 'KEREMET TV',
-    speed: 300,
-    contract: 8999,
-    nocontract: 9999,
-    discount: true,
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '300 Мб/с, безлимит' },
-      { type: 'tv', icon: '📺', name: 'Телевидение', val: 'TV+, 160 телеканалов, 8 онлайн-кинотеатров' }
-    ]
-  },
-  {
-    id: 'januya',
-    name: 'JANUYA',
-    speed: 200,
-    promo: 9999,
-    badge: 'Акция',
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '200 Мб/с, безлимит' },
-      { type: 'tv', icon: '📺', name: 'Телевидение', val: '84 телеканала' },
-      { type: 'sim', icon: '📱', name: 'Мобильная связь', val: 'от 2 до 7 SIM по 60 ГБ, безлимит внутри Activ и Altel' }
-    ]
-  },
-  {
-    id: 'vygodny',
-    name: 'ВЫГОДНЫЙ',
-    speed: 200,
-    promo: 7999,
-    badge: 'Акция',
-    features: [
-      { type: 'wifi', icon: '📶', name: 'Интернет', val: '200 Мб/с, безлимит' },
-      { type: 'sim', icon: '📱', name: 'Мобильная связь', val: '2 SIM по 60 ГБ' },
-      { type: 'gift', icon: '🎁', name: 'В подарок', val: 'Смарт-часы' }
-    ]
-  }
+  { id:'bereket4', name:'BEREKET 4', speed:500, badge:'Топовый', contract:16999, nocontract:17999, discount:true,
+    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 150+ каналов, 8 онлайн-кинотеатров'},{t:'📱',n:'Мобильная связь',v:'4 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
+  { id:'bereket2', name:'BEREKET 2', speed:500, badge:'Популярный', contract:12999, nocontract:13999, discount:true,
+    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 150+ каналов, 8 онлайн-кинотеатров'},{t:'📱',n:'Мобильная связь',v:'2 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
+  { id:'keremet_mobile', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:10999, discount:true,
+    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📱',n:'Мобильная связь',v:'1 SIM: 100/60 ГБ Activ/Altel, безлимит внутри, 250 мин на другие сети'}] },
+  { id:'keremet_tv', name:'KEREMET TV', speed:300, contract:8999, nocontract:9999, discount:true,
+    features:[{t:'📶',n:'Интернет',v:'300 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 160 каналов, 8 онлайн-кинотеатров'}] },
+  { id:'januya', name:'JANUYA', speed:200, badge:'Акция', promo:9999,
+    features:[{t:'📶',n:'Интернет',v:'200 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'84 телеканала'},{t:'📱',n:'Мобильная связь',v:'от 2 до 7 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
+  { id:'vygodny', name:'ВЫГОДНЫЙ', speed:200, badge:'Акция', promo:7999,
+    features:[{t:'📶',n:'Интернет',v:'200 Мб/с, безлимит'},{t:'📱',n:'Мобильная связь',v:'2 SIM по 60 ГБ'},{t:'🎁',n:'В подарок',v:'Смарт-часы'}] },
 ];
 
-// ── STATE ─────────────────────────────────────────────────────────────
-let selectedId = TARIFFS[1].id; // BEREKET 2 default
-let paymentMode = {}; // tariffId → 'contract' | 'nocontract'
-TARIFFS.forEach(t => {
-  paymentMode[t.id] = t.discount ? 'contract' : 'promo';
-});
+let selectedId = TARIFFS[1].id;
+const payment = {};
+TARIFFS.forEach(t => { payment[t.id] = t.discount ? 'contract' : 'promo'; });
 
-// ── PRICE ─────────────────────────────────────────────────────────────
-function price(t) {
-  if (t.promo) return t.promo;
-  return paymentMode[t.id] === 'contract' ? t.contract : t.nocontract;
-}
+function fmt(n) { return n.toLocaleString('ru-RU') + ' ₸'; }
+function price(t) { return t.promo ? t.promo : payment[t.id]==='contract' ? t.contract : t.nocontract; }
 
-function fmt(n) {
-  return n.toLocaleString('ru-RU') + ' ₸';
-}
-
-// ── RENDER CARDS ──────────────────────────────────────────────────────
 function renderCards() {
-  const grid = document.getElementById('tariffGrid');
-  grid.innerHTML = TARIFFS.map(t => {
+  document.getElementById('tariffGrid').innerHTML = TARIFFS.map(t => {
     const p = price(t);
-    const isSelected = t.id === selectedId;
+    const sel = t.id === selectedId;
+    const priceLine = t.promo
+      ? `<p class="text-xs text-muted-foreground">Акционная цена</p>`
+      : `<p class="text-xs text-muted-foreground">${payment[t.id]==='contract' ? 'С контрактом 3 года' : 'Без контракта'}</p>`;
+    const altLine = t.discount
+      ? `<p class="text-xs text-muted-foreground mt-0.5">${payment[t.id]==='contract' ? 'Без контракта: '+fmt(t.nocontract) : 'С контрактом: '+fmt(t.contract)+' — скидка 50%'}</p>`
+      : '';
+    const discountBadge = t.discount && payment[t.id]==='contract'
+      ? `<span class="badge badge-brand text-[10px]">−50% в 1‑й мес.</span>` : '';
     return `
-      <div class="tariff-card${isSelected ? ' selected' : ''}" id="card-${t.id}" data-id="${t.id}"
-           onclick="selectTariff('${t.id}')" role="radio" aria-checked="${isSelected}" tabindex="0"
+      <div class="card tariff-card cursor-pointer transition-all hover:shadow-md ${sel ? 'selected' : ''} flex flex-col"
+           id="card-${t.id}" data-id="${t.id}"
+           onclick="selectTariff('${t.id}')"
+           role="radio" aria-checked="${sel}" tabindex="0"
            onkeydown="if(event.key==='Enter'||event.key===' ')selectTariff('${t.id}')">
-        <div class="card-top">
-          <div>
-            <div class="card-name">${t.name}</div>
-            <div class="card-speed">${t.speed} Мб/с · безлимит</div>
+        <div class="card-header pb-3">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <p class="font-bold text-base leading-tight">${t.name}</p>
+            ${t.badge ? `<span class="badge badge-secondary flex-shrink-0">${t.badge}</span>` : ''}
           </div>
-          ${t.badge ? `<span class="card-badge">${t.badge}</span>` : ''}
+          <p class="text-xs text-muted-foreground">${t.speed} Мб/с · безлимит</p>
         </div>
-        <div class="card-body">
-          <div class="card-features">
+        <hr class="separator mx-6">
+        <div class="card-content flex-1 flex flex-col gap-3 pt-4">
+          <div class="flex flex-col gap-2">
             ${t.features.map(f => `
-              <div class="feature">
-                <div class="feat-icon ${f.type}">${f.icon}</div>
-                <div class="feat-info">
-                  <div class="feat-name">${f.name}</div>
-                  <div class="feat-val">${f.val}</div>
+              <div class="flex gap-2 items-start">
+                <span class="text-base leading-none mt-0.5 flex-shrink-0">${f.t}</span>
+                <div class="min-w-0">
+                  <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide" style="font-size:.68rem">${f.n}</p>
+                  <p class="text-sm">${f.v}</p>
                 </div>
               </div>
             `).join('')}
           </div>
-          <div class="card-price-block">
-            <div class="price-label">${t.promo ? 'Акционная цена' : (paymentMode[t.id]==='contract' ? 'С контрактом 3 года' : 'Без контракта')}</div>
-            <div class="price-row">
-              <span class="price-main">${fmt(p)}</span>
-              <span class="price-unit">/ мес</span>
+          <div class="mt-auto pt-3 border-t border-border">
+            ${priceLine}
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span class="text-2xl font-bold tracking-tight" style="font-variant-numeric:tabular-nums">${fmt(p)}</span>
+              <span class="text-sm text-muted-foreground">/ мес</span>
             </div>
-            ${t.discount && paymentMode[t.id]==='contract' ? '<div class="price-promo">Скидка 50% в первый месяц</div>' : ''}
-            ${t.discount ? `<div class="price-alt">${paymentMode[t.id]==='contract' ? 'Без контракта: '+fmt(t.nocontract) : 'С контрактом: '+fmt(t.contract)+' → скидка 50%'}</div>` : ''}
+            ${discountBadge}
+            ${altLine}
           </div>
-          <button class="card-cta" onclick="event.stopPropagation();selectAndOpen('${t.id}')">
+          <button class="btn btn-default w-full justify-center mt-1" onclick="event.stopPropagation();selectAndOpen('${t.id}')">
             Оформить заявку
           </button>
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
 }
 
-// ── FILTER ────────────────────────────────────────────────────────────
-let currentFilter = 'all';
 function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   TARIFFS.forEach(t => {
-    const card = document.getElementById('card-' + t.id);
-    if (!card) return;
+    const el = document.getElementById('card-' + t.id);
+    if (!el) return;
     let show = true;
-    if (f === 'contract') show = !!t.contract;
-    if (f === 'nocontract') show = !!t.nocontract;
-    if (f === 'promo') show = !!t.promo;
-    card.hidden = !show;
+    if (f==='contract')   show = !!t.contract;
+    if (f==='nocontract') show = !!t.nocontract;
+    if (f==='promo')      show = !!t.promo;
+    el.hidden = !show;
   });
 }
 
-// ── SELECT ────────────────────────────────────────────────────────────
 function selectTariff(id) {
   selectedId = id;
   document.querySelectorAll('.tariff-card').forEach(c => {
-    const sel = c.dataset.id === id;
-    c.classList.toggle('selected', sel);
-    c.setAttribute('aria-checked', sel);
+    const s = c.dataset.id === id;
+    c.classList.toggle('selected', s);
+    c.setAttribute('aria-checked', s);
   });
   updateStickyBar();
 }
 
-function selectAndOpen(id) {
-  selectTariff(id);
-  openSheet(id);
-}
+function selectAndOpen(id) { selectTariff(id); openSheet(id); }
 
-// ── STICKY BAR ────────────────────────────────────────────────────────
 function updateStickyBar() {
   const t = TARIFFS.find(x => x.id === selectedId);
-  const bar = document.getElementById('stickyBar');
   if (!t) return;
   document.getElementById('stickyName').textContent = t.name;
-  document.getElementById('stickyPrice').textContent = fmt(price(t)) + ' в месяц';
-  bar.classList.add('visible');
+  document.getElementById('stickyPrice').textContent = fmt(price(t)) + ' / мес';
+  if (window.innerWidth < 640) document.getElementById('stickyBar').classList.add('visible');
 }
 
-// ── SHEET ─────────────────────────────────────────────────────────────
 function openSheet(id) {
   if (id) selectTariff(id);
   const t = TARIFFS.find(x => x.id === selectedId);
-  if (t) updateSheetSummary(t);
+  if (t) syncSheetSummary(t);
   document.getElementById('overlay').classList.add('open');
   document.getElementById('sheet').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1358,136 +635,79 @@ function closeSheet() {
   document.body.style.overflow = '';
 }
 
-function updateSheetSummary(t) {
+function syncSheetSummary(t) {
   document.getElementById('tsSummaryName').textContent = t.name + ' · ' + t.speed + ' Мб/с';
   document.getElementById('tsSummaryPrice').textContent = fmt(price(t)) + '/мес';
-
   const ct = document.getElementById('contractToggle');
   if (t.contract && t.nocontract) {
     ct.hidden = false;
-    const mode = paymentMode[t.id];
-    document.getElementById('ctContract').classList.toggle('active', mode === 'contract');
-    document.getElementById('ctNoContract').classList.toggle('active', mode !== 'contract');
-  } else {
-    ct.hidden = true;
-  }
+    const m = payment[t.id];
+    document.getElementById('ctContract').classList.toggle('active', m==='contract');
+    document.getElementById('ctNoContract').classList.toggle('active', m!=='contract');
+  } else { ct.hidden = true; }
 }
 
 function setPayment(mode) {
   const t = TARIFFS.find(x => x.id === selectedId);
   if (!t) return;
-  paymentMode[t.id] = mode;
-  document.getElementById('ctContract').classList.toggle('active', mode === 'contract');
-  document.getElementById('ctNoContract').classList.toggle('active', mode !== 'contract');
-  updateSheetSummary(t);
+  payment[t.id] = mode;
+  document.getElementById('ctContract').classList.toggle('active', mode==='contract');
+  document.getElementById('ctNoContract').classList.toggle('active', mode!=='contract');
+  syncSheetSummary(t);
   renderCards();
   updateStickyBar();
 }
 
-// ── FORM VALIDATION ───────────────────────────────────────────────────
-function showErr(id, msg) {
-  const el = document.getElementById(id);
-  if (el) { el.textContent = msg || el.textContent; el.classList.add('show'); }
-}
-function clearErr(id) {
-  const el = document.getElementById(id);
-  if (el) el.classList.remove('show');
-}
-function setFieldErr(inputId, errId, condition, msg) {
+function scrollToTariffs() { document.getElementById('tariffs').scrollIntoView({behavior:'smooth'}); }
+
+// Validation helpers
+function setErr(inputId, errId, cond, msg) {
   const inp = document.getElementById(inputId);
-  if (condition) { inp.classList.add('error'); showErr(errId, msg); return false; }
-  inp.classList.remove('error'); clearErr(errId); return true;
+  const err = document.getElementById(errId);
+  if (cond) { inp.classList.add('error'); if (msg) err.textContent = msg; err.classList.add('show'); return false; }
+  inp.classList.remove('error'); err.classList.remove('show'); return true;
 }
 
-function validateForm(data) {
-  let ok = true;
-  ok = setFieldErr('fFio', 'eFio', data.fio.trim().split(/\s+/).length < 2, 'Укажите фамилию и имя') && ok;
-  ok = setFieldErr('fIin', 'eIin', !/^\d{12}$/.test(data.iin), 'ИИН состоит ровно из 12 цифр') && ok;
-  ok = setFieldErr('fZk', 'eZk', !data.zk, 'Выберите жилой комплекс') && ok;
-  ok = setFieldErr('fFlat', 'eFlat', !data.flat.trim(), 'Укажите номер квартиры') && ok;
-  ok = setFieldErr('fPhone', 'ePhone', !/^\+7\s?7\d{2}\s?\d{3}\s?\d{2}\s?\d{2}$/.test(data.phone.replace(/\s/g,'')), 'Введите номер в формате +7 7XX XXX XX XX') && ok;
-  const consent = document.getElementById('fConsent').checked;
-  if (!consent) { showErr('eConsent'); ok = false; } else clearErr('eConsent');
-  return ok;
-}
-
-// ── SUBMIT ────────────────────────────────────────────────────────────
-document.getElementById('appForm').addEventListener('submit', async function(e) {
+document.getElementById('appForm').addEventListener('submit', async e => {
   e.preventDefault();
   const t = TARIFFS.find(x => x.id === selectedId);
+  const v = id => document.getElementById(id).value;
   const data = {
-    fio: document.getElementById('fFio').value,
-    iin: document.getElementById('fIin').value,
-    zk: document.getElementById('fZk').value,
-    flat: document.getElementById('fFlat').value,
-    block: document.getElementById('fBlock').value,
-    phone: document.getElementById('fPhone').value,
-    tariff: t ? t.name : '',
-    price: t ? fmt(price(t)) : '',
-    payment: t ? (t.promo ? 'акция' : paymentMode[t.id] === 'contract' ? 'контракт' : 'без контракта') : '',
-    date: new Date().toLocaleString('ru-RU')
+    date: new Date().toLocaleString('ru-RU'),
+    fio: v('fFio'), iin: v('fIin'), zk: v('fZk'),
+    flat: v('fFlat'), block: v('fBlock'), phone: v('fPhone'),
+    tariff: t ? t.name : '', price: t ? fmt(price(t)) : '',
+    payment: t ? (t.promo ? 'акция' : payment[t.id]==='contract' ? 'контракт' : 'без контракта') : ''
   };
-
-  if (!validateForm(data)) return;
+  let ok = true;
+  ok = setErr('fFio','eFio', data.fio.trim().split(/\s+/).length < 2) && ok;
+  ok = setErr('fIin','eIin', !/^\d{12}$/.test(data.iin)) && ok;
+  ok = setErr('fZk','eZk', !data.zk) && ok;
+  ok = setErr('fFlat','eFlat', !data.flat.trim()) && ok;
+  ok = setErr('fPhone','ePhone', !/^\+7\s?7\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(data.phone)) && ok;
+  const consent = document.getElementById('fConsent').checked;
+  if (!consent) { document.getElementById('eConsent').classList.add('show'); ok = false; }
+  else document.getElementById('eConsent').classList.remove('show');
+  if (!ok) return;
 
   const btn = document.getElementById('submitBtn');
   const netErr = document.getElementById('netErr');
-  netErr.classList.remove('show');
-  btn.disabled = true;
-  btn.textContent = 'Отправляем…';
+  netErr.classList.add('hidden'); netErr.classList.remove('flex');
+  btn.disabled = true; btn.textContent = 'Отправляем…';
 
-  // Submit to Google Sheets via Apps Script
   try {
-    if (SHEET_URL && SHEET_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-      await fetch(SHEET_URL + '?' + new URLSearchParams(data), {
-        method: 'GET',
-        mode: 'no-cors'
-      });
-    }
-    // Show success (even with no-cors we can't verify, assume success after fetch resolves)
+    await fetch(SHEET_URL + '?' + new URLSearchParams(data), { method:'GET', mode:'no-cors' });
     document.getElementById('formView').hidden = true;
-    document.getElementById('successView').classList.add('show');
+    const sv = document.getElementById('successView');
+    sv.classList.remove('hidden'); sv.classList.add('flex');
   } catch {
-    netErr.classList.add('show');
-    btn.disabled = false;
-    btn.textContent = 'Отправить заявку';
+    netErr.classList.remove('hidden'); netErr.classList.add('flex');
+    btn.disabled = false; btn.textContent = 'Отправить заявку';
   }
 });
 
-// ── SCROLL ────────────────────────────────────────────────────────────
-function scrollToTariffs() {
-  document.getElementById('tariffs').scrollIntoView({ behavior: 'smooth' });
-}
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeSheet(); });
 
-// ── INIT ──────────────────────────────────────────────────────────────
 renderCards();
 updateStickyBar();
-
-// Escape key closes sheet
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeSheet();
-});
 </script>
-
-<!--
-════════════════════════════════════════════════════════
- Google Apps Script для сохранения в таблицу
-
- 1. Создайте Google Таблицу
- 2. Расширения → Apps Script → вставьте код ниже
- 3. Деплой → Новый деплой → Веб-приложение
-    Выполнять от: Я / Доступ: Все
- 4. Скопируйте URL и вставьте в SHEET_URL выше
-
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Дата', 'ФИО', 'ИИН', 'ЖК', 'Квартира', 'Блок', 'Телефон', 'Тариф', 'Цена', 'Оплата']);
-  }
-  sheet.appendRow([data.date, data.fio, data.iin, data.zk, data.flat, data.block, data.phone, data.tariff, data.price, data.payment]);
-  return ContentService.createTextOutput(JSON.stringify({ok:true}))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-════════════════════════════════════════════════════════
--->
