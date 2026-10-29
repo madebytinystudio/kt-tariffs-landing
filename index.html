@@ -386,16 +386,17 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
       <!-- Contract toggle -->
       <div id="contractToggle" hidden>
-        <div class="tabs-list w-full h-auto">
-          <button class="tab-trigger flex-1 active" id="ctContract" onclick="setPayment('contract')">
-            С контрактом
-            <span class="ml-1 badge badge-brand text-[10px] py-0">−50%</span>
-          </button>
-          <button class="tab-trigger flex-1" id="ctNoContract" onclick="setPayment('nocontract')">
-            Без контракта
-          </button>
+        <p class="text-xs font-medium text-muted-foreground mb-2">Тип подключения</p>
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="contractType" id="ctContract" value="contract" checked onchange="setPayment('contract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
+            <span class="text-sm">С контрактом на 3 года <span class="text-brand font-medium">−50% в первый месяц</span></span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="contractType" id="ctNoContract" value="nocontract" onchange="setPayment('nocontract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
+            <span class="text-sm">Без контракта</span>
+          </label>
         </div>
-        <p class="text-xs text-muted-foreground mt-1.5">С контрактом на 3 года — скидка 50% в первый месяц</p>
       </div>
 
       <hr class="separator">
@@ -413,26 +414,25 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
           <div class="err-text" id="eIin">ИИН состоит ровно из 12 цифр</div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="label" for="fZk">Жилой комплекс</label>
-            <div class="select-wrap">
-              <select class="input" id="fZk" name="zk">
-                <option value="">Выберите ЖК</option>
-                <option value="auez1">Auez Comfort 1</option>
-                <option value="auez2">Auez Comfort 2</option>
-                <option value="mod2">MOD Urban 2</option>
-                <option value="abyroi">Abyroi</option>
-                <option value="modstyle">MOD Style</option>
-              </select>
-            </div>
-            <div class="err-text" id="eZk">Выберите ЖК</div>
+        <div>
+          <label class="label" for="fZk">Жилой комплекс</label>
+          <div class="select-wrap">
+            <select class="input" id="fZk" name="zk">
+              <option value="">Выберите ЖК</option>
+              <option value="auez1">Auez Comfort 1</option>
+              <option value="auez2">Auez Comfort 2</option>
+              <option value="mod2">MOD Urban 2</option>
+              <option value="abyroi">Abyroi</option>
+              <option value="modstyle">MOD Style</option>
+            </select>
           </div>
-          <div>
-            <label class="label" for="fFlat">Квартира</label>
-            <input class="input" id="fFlat" name="flat" type="text" inputmode="numeric" placeholder="42">
-            <div class="err-text" id="eFlat">Укажите номер</div>
-          </div>
+          <div class="err-text" id="eZk">Выберите ЖК</div>
+        </div>
+
+        <div>
+          <label class="label" for="fFlat">Квартира</label>
+          <input class="input" id="fFlat" name="flat" type="text" inputmode="numeric" placeholder="42">
+          <div class="err-text" id="eFlat">Укажите номер</div>
         </div>
 
         <div>
@@ -638,8 +638,8 @@ function syncSheetSummary(t) {
   if (t.contract && t.nocontract) {
     ct.hidden = false;
     const m = payment[t.id];
-    document.getElementById('ctContract').classList.toggle('active', m==='contract');
-    document.getElementById('ctNoContract').classList.toggle('active', m!=='contract');
+    document.getElementById('ctContract').checked = (m === 'contract');
+    document.getElementById('ctNoContract').checked = (m !== 'contract');
   } else { ct.hidden = true; }
 }
 
@@ -647,8 +647,6 @@ function setPayment(mode) {
   const t = TARIFFS.find(x => x.id === selectedId);
   if (!t) return;
   payment[t.id] = mode;
-  document.getElementById('ctContract').classList.toggle('active', mode==='contract');
-  document.getElementById('ctNoContract').classList.toggle('active', mode!=='contract');
   syncSheetSummary(t);
   renderCards();
   updateStickyBar();
