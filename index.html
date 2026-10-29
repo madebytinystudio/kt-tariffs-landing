@@ -446,14 +446,6 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
           <div class="err-text" id="ePhone">Введите номер в формате +7 7XX XXX XX XX</div>
         </div>
 
-        <div class="flex items-start gap-2.5">
-          <input type="checkbox" id="fConsent" class="mt-0.5">
-          <label for="fConsent" class="text-sm text-muted-foreground leading-relaxed cursor-pointer">
-            Согласен(на) на обработку персональных данных и их передачу АО «Казахтелеком» для подключения услуг
-          </label>
-        </div>
-        <div class="err-text -mt-2" id="eConsent">Отметьте согласие для отправки</div>
-
         <div class="hidden rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-sm text-destructive" id="netErr">
           Заявка не отправилась. Проверьте интернет и попробуйте ещё раз
         </div>
@@ -461,6 +453,10 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
         <button type="submit" class="btn btn-default btn-lg w-full justify-center" id="submitBtn">
           Отправить заявку
         </button>
+
+        <p class="text-xs text-muted-foreground text-center leading-relaxed">
+          Отправляя заявку, вы соглашаетесь на обработку персональных данных и их передачу АО «Казахтелеком» для подключения услуг
+        </p>
       </form>
     </div>
   </div>
@@ -685,9 +681,6 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   ok = setErr('fZk','eZk', !data.zk) && ok;
   ok = setErr('fFlat','eFlat', !data.flat.trim()) && ok;
   ok = setErr('fPhone','ePhone', !/^\+7\s?7\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(data.phone)) && ok;
-  const consent = document.getElementById('fConsent').checked;
-  if (!consent) { document.getElementById('eConsent').classList.add('show'); ok = false; }
-  else document.getElementById('eConsent').classList.remove('show');
   if (!ok) return;
 
   const btn = document.getElementById('submitBtn');
