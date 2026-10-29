@@ -166,7 +166,7 @@ h1, h2, h3, h4, h5, h6 {
 .card-footer  { padding: .75rem 1.5rem 1.5rem; display: flex; align-items: center; gap: .5rem; }
 /* Recommended card */
 .tariff-rec-banner { background: transparent; color: #fff; border: none; border-radius: 0; padding: .5rem 1.5rem; font-size: .8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: .375rem; }
-.card.recommended { border-radius: calc(1.25rem - 4px); border: none; }
+.card.recommended { border-radius: calc(1.25rem - 4px); border: none; box-shadow: none; }
 
 /* Badge */
 .badge        { display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid transparent; padding: .2rem .6rem; font-size: .75rem; font-weight: 600; line-height: 1; }
@@ -218,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 639px) { .header-cta { display: none !important; } }
 
 /* Mobile carousel / desktop grid for tariff cards */
-.tariff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.tariff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; padding: .5rem; margin: -.5rem; }
 @media (max-width: 639px) {
   .tariff-grid {
     display: flex; overflow-x: auto; gap: 12px;
@@ -327,7 +327,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
         Интернет уже<br>в вашем доме
       </h1>
       <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
-        Просто выберите тариф
+        Осталось подобрать подходящий тариф
       </p>
     </div>
     <div style="flex-shrink:0;width:200px;height:232px;display:none" id="rocketWrap">
@@ -363,14 +363,14 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 </script>
 
 <!-- ── TARIFFS ────────────────────────────────────────────────────── -->
-<section class="max-w-5xl mx-auto px-4 py-14" id="tariffs">
-  <div class="flex flex-col items-center text-center gap-2 mb-10">
+<section class="max-w-5xl mx-auto px-4 py-10" id="tariffs">
+  <div class="flex flex-col items-center text-center gap-2 mb-6">
     <h2 class="text-2xl font-bold tracking-tight">Тарифы</h2>
     <p class="text-muted-foreground">Все тарифы включают безлимитный интернет и бесплатное подключение</p>
   </div>
 
   <!-- Speed segmented control -->
-  <div class="flex justify-center mb-10">
+  <div class="flex justify-center mb-6">
     <div class="tabs-list" id="speedTabs" role="tablist">
       <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
       <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
@@ -622,7 +622,7 @@ function renderCards() {
 
     if (isRec) {
       return `<div style="${colStart};display:flex;flex-direction:column;border-radius:1.25rem;background:hsl(var(--brand));padding:0 4px 4px">
-        <div class="tariff-rec-banner"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.5L5 13.5H11.5L10.5 21.5L19 10.5H12.5L13 2.5Z"/></svg> Рекомендуем</div>
+        <div class="tariff-rec-banner"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.5L5 13.5H11.5L10.5 21.5L19 10.5H12.5L13 2.5Z"/></svg> Популярное</div>
         <div class="card recommended ${sel?'selected':''}" id="card-${t.id}" data-id="${t.id}"
              onclick="selectAndOpen('${t.id}')" role="radio" aria-checked="${sel}" tabindex="0" style="cursor:pointer;flex:1">${inner}</div>
       </div>`;
