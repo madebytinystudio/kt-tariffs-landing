@@ -1,4 +1,4 @@
-<title>Интернет Казахтелеком</title>
+<title>Подключение интернета в вашем доме</title>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -242,6 +242,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sheet-overlay.open { opacity: 1; pointer-events: all; }
 
+/* Sheet body — mobile: single column */
+.sheet-body { display: flex; flex-direction: column; }
+.sheet-left  { padding: 0 1.5rem 1rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.sheet-right { padding: 0 1.5rem 1.5rem; }
+
 /* Sheet */
 .sheet {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 51;
@@ -256,8 +261,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sheet.open { transform: translateY(0); }
 @media (min-width: 640px) {
-  .sheet { max-width: 500px; left: 50%; right: auto; border-radius: 1rem 1rem 0 0; transform: translateX(-50%) translateY(100%); }
-  .sheet.open { transform: translateX(-50%) translateY(0); }
+  .sheet {
+    max-width: 780px; width: calc(100% - 2rem);
+    left: 50%; right: auto; bottom: auto; top: 50%;
+    border-radius: 1rem;
+    transform: translate(-50%, calc(-50% + 24px));
+    opacity: 0;
+    transition: transform .3s cubic-bezier(.32,.72,0,1), opacity .25s;
+  }
+  .sheet.open { transform: translate(-50%, -50%); opacity: 1; }
+  .sheet-drag-handle { display: none; }
+  .sheet-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .sheet-left { padding: 0 1.5rem 1.5rem; border-right: 1px solid hsl(var(--border)); display: flex; flex-direction: column; gap: 1.25rem; }
+  .sheet-right { padding: 0 1.5rem 1.5rem; }
 }
 
 /* Sticky bar */
@@ -305,15 +321,46 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
 <!-- ── HERO ──────────────────────────────────────────────────────── -->
 <section>
-  <div class="max-w-5xl mx-auto px-4 py-16 flex flex-col items-start gap-2 md:py-24">
-    <h1 class="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
-      Интернет уже<br>в вашем доме
-    </h1>
-    <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
-      Просто выберите тариф
-    </p>
+  <div class="max-w-5xl mx-auto px-4 py-16 md:py-24" style="display:flex;align-items:center;justify-content:space-between;gap:2rem">
+    <div class="flex flex-col items-start gap-2">
+      <h1 class="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
+        Интернет уже<br>в вашем доме
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
+        Просто выберите тариф
+      </p>
+    </div>
+    <div style="flex-shrink:0;width:200px;height:232px;display:none" id="rocketWrap">
+      <svg id="rocketSvg" width="200" height="232" viewBox="0 0 51 59" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.85">
+        <path id="rocketPath" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"
+          d="M1.3753 38.6118C2.4353 38.6118 3.4853 38.5118 4.5453 38.4518C6.58456 38.2932 8.63114 38.2498 10.6753 38.3218H11.4053V39.0218C11.6453 42.1318 13.6653 45.7118 17.0653 46.5118C18.8953 46.9418 21.1853 46.1718 21.6653 44.3418C22.0253 42.9918 21.2953 41.4518 19.7253 40.2318C17.5859 38.6474 15.0553 37.676 12.4053 37.4218C12.6659 34.9911 13.3424 32.6233 14.4053 30.4218C15.3978 28.1869 16.5162 26.01 17.7553 23.9018C20.7791 24.4798 23.6172 25.7839 26.0253 27.7018C29.3211 30.0277 32.1474 32.9558 34.3553 36.3318C31.7777 38.6812 28.7735 40.5143 25.5053 41.7318L25.8453 42.6718C29.1593 41.4238 32.2114 39.5688 34.8453 37.2018C36.0804 39.1268 36.7396 41.3647 36.7453 43.6518C36.5152 46.4813 35.1872 49.1086 33.0453 50.9718C30.9549 52.7246 28.6699 54.2311 26.2353 55.4618C26.1553 55.1518 26.0653 54.6718 25.9853 54.2518C25.7941 52.6592 25.3164 51.1143 24.5753 49.6918C24.0507 48.8177 23.2478 48.1451 22.2953 47.7818C20.4553 47.1818 18.6053 48.4618 17.6553 49.8918C17.1322 50.7569 16.7031 51.6755 16.3753 52.6318C16.1553 53.2018 15.9253 53.8018 15.6553 54.3518C15.3444 55.1216 14.7893 55.7681 14.0753 56.1918C13.7711 56.3631 13.418 56.4266 13.0731 56.3722C12.7283 56.3177 12.4119 56.1485 12.1753 55.8918C12.0742 55.7311 11.9904 55.5602 11.9253 55.3818C11.8312 55.1392 11.7104 54.9078 11.5653 54.6918C10.7053 53.4718 8.8953 53.5718 7.7053 54.3618C7.08377 54.8157 6.52552 55.3504 6.0453 55.9518C5.7453 56.2918 5.4653 56.6118 5.1653 56.9518C4.83853 57.3258 4.41186 57.5987 3.93537 57.7387C3.45889 57.8786 2.95238 57.8797 2.4753 57.7418C2.48441 57.6647 2.50817 57.59 2.5453 57.5218C2.98981 56.6575 3.52985 55.8457 4.1553 55.1018C4.8749 54.2546 5.48008 53.3166 5.9553 52.3118C6.11574 52.0045 6.18184 51.6566 6.1453 51.3118C6.0476 50.918 5.80482 50.5756 5.46551 50.3531C5.12621 50.1306 4.71541 50.0444 4.3153 50.1118C3.92824 50.1737 3.55143 50.2881 3.1953 50.4518L2.6653 50.6518C2.3453 50.7418 1.9153 50.7418 1.8553 50.7718C1.988 50.525 2.15649 50.2992 2.3553 50.1018C2.4553 49.9918 2.5453 49.8918 2.6053 49.8118C2.8953 49.4218 3.1953 49.0418 3.4953 48.6518C3.7953 48.2618 4.1553 47.8018 4.4953 47.3718L4.6453 47.1718C6.08011 45.4684 7.21616 43.5344 8.0053 41.4518L7.0053 41.1518C6.25552 43.1277 5.17324 44.9608 3.8053 46.5718L3.6553 46.7718C3.3353 47.2018 3.0153 47.6218 2.6553 48.0418L1.7553 49.2118C1.69612 49.2886 1.63268 49.3621 1.5653 49.4318C1.1853 49.8418 0.675296 50.4318 0.835296 50.9818C0.869993 51.1041 0.929673 51.2179 1.01057 51.3161C1.09146 51.4142 1.19182 51.4944 1.3053 51.5518C1.82191 51.7407 2.38868 51.7407 2.9053 51.5518C3.11226 51.489 3.31586 51.4155 3.5153 51.3318C3.78673 51.199 4.07667 51.108 4.3753 51.0618C4.7153 51.0618 5.0753 51.1918 5.1053 51.4018C5.09742 51.551 5.06003 51.6972 4.9953 51.8318C4.54691 52.7534 3.98232 53.6137 3.3153 54.3918C2.69761 55.221 2.17437 56.1166 1.7553 57.0618C1.66324 57.2218 1.61068 57.4014 1.60198 57.5857C1.59328 57.7701 1.6287 57.9539 1.7053 58.1218C1.82239 58.3252 2.00094 58.4862 2.2153 58.5818C2.54967 58.7516 2.92034 58.8374 3.2953 58.8318C4.30241 58.773 5.25273 58.3459 5.9653 57.6318C6.29957 57.3157 6.61669 56.9818 6.9153 56.6318C7.3414 56.0965 7.83558 55.6191 8.3853 55.2118C9.1653 54.6918 10.3853 54.5918 10.8653 55.2918C10.9719 55.4473 11.0592 55.6152 11.1253 55.7918C11.2193 56.0376 11.34 56.2724 11.4853 56.4918C11.8605 56.9428 12.3803 57.2499 12.9564 57.3611C13.5324 57.4723 14.1292 57.3807 14.6453 57.1018C15.543 56.5759 16.245 55.7721 16.6453 54.8118C16.9353 54.2218 17.1653 53.6018 17.3953 53.0018C17.6982 52.1143 18.0973 51.2626 18.5853 50.4618C19.3453 49.3018 20.7953 48.3418 22.0853 48.7518C22.8242 49.0503 23.4408 49.5894 23.8353 50.2818C24.4971 51.5869 24.9236 52.9986 25.0953 54.4518C25.3853 55.9918 25.5153 56.7018 26.1853 56.6018C28.9439 55.3391 31.5121 53.6965 33.8153 51.7218C36.1382 49.6767 37.573 46.8072 37.8153 43.7218C37.8155 41.1698 37.0681 38.6737 35.6653 36.5418C38.5689 33.788 41.0042 30.5792 42.8753 27.0418C46.5053 20.2518 50.6453 11.2118 50.4953 1.4018C50.512 1.20818 50.4867 1.01323 50.4211 0.830292C50.3555 0.64735 50.2512 0.480725 50.1153 0.341805C49.8867 0.169985 49.611 0.0722712 49.3253 0.0618038C45.6053 -0.278196 41.5653 0.781804 36.9653 3.3118C28.7983 7.97995 22.004 14.7156 17.2653 22.8418C16.6331 22.787 15.9974 22.787 15.3653 22.8418C11.7551 23.2881 8.44369 25.0723 6.0853 27.8418C3.80822 30.5112 1.86706 33.4498 0.305296 36.5918C-0.254704 37.5918 0.0852956 38.1518 0.305296 38.3818C0.618648 38.5943 1.0023 38.6768 1.3753 38.6118ZM37.4553 4.1618C41.8753 1.7318 45.7253 0.701803 49.2453 1.0318H49.4653C49.4883 1.13723 49.4883 1.24638 49.4653 1.3518C49.6053 10.9318 45.5353 19.8318 41.9653 26.5118C40.1763 29.8901 37.8606 32.9619 35.1053 35.6118C32.8413 32.2191 29.9778 29.2675 26.6553 26.9018C24.222 24.9843 21.3833 23.647 18.3553 22.9918C22.9813 15.165 29.5634 8.67592 37.4553 4.1618ZM19.1453 41.0618C19.6053 41.4318 21.1453 42.7318 20.7353 44.1418C20.4053 45.3918 18.6753 45.9018 17.3253 45.5918C14.3853 44.9018 12.6453 41.7518 12.4353 38.9918V38.4818C14.8617 38.7292 17.1782 39.6198 19.1453 41.0618ZM1.1453 37.0618C2.66262 33.9877 4.55358 31.1126 6.7753 28.5018C8.97534 25.938 12.0526 24.2871 15.4053 23.8718C15.6751 23.8569 15.9455 23.8569 16.2153 23.8718H16.7553C15.5822 25.9094 14.5206 28.0091 13.5753 30.1618C12.4664 32.4507 11.7594 34.9133 11.4853 37.4418H10.7753C8.69453 37.3646 6.61104 37.408 4.5353 37.5718C3.4853 37.6318 2.4453 37.7018 1.3953 37.7318C1.28368 37.7597 1.16691 37.7597 1.0553 37.7318C1.02739 37.6108 1.02453 37.4855 1.04689 37.3634C1.06925 37.2413 1.11635 37.125 1.1853 37.0218L1.1453 37.0618Z"/>
+      </svg>
+    </div>
   </div>
 </section>
+<script>
+(function() {
+  function initRocket() {
+    var wrap = document.getElementById('rocketWrap');
+    var path = document.getElementById('rocketPath');
+    if (!wrap || !path) return;
+    if (window.innerWidth < 768) return;
+    wrap.style.display = 'block';
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    requestAnimationFrame(function() {
+      path.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(0.4,0,0.2,1)';
+      path.style.strokeDashoffset = 0;
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initRocket);
+  } else {
+    initRocket();
+  }
+})();
+</script>
 
 <!-- ── TARIFFS ────────────────────────────────────────────────────── -->
 <section class="max-w-5xl mx-auto px-4 py-14" id="tariffs">
@@ -361,7 +408,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
 <!-- ── SHEET ──────────────────────────────────────────────────────── -->
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-  <div class="flex justify-center pt-3 pb-1">
+  <div class="sheet-drag-handle flex justify-center pt-3 pb-1">
     <div class="w-10 h-1 rounded-full bg-border"></div>
   </div>
 
@@ -374,32 +421,36 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
       </button>
     </div>
 
-    <div class="px-6 pb-6 flex flex-col gap-5">
-      <!-- Tariff summary -->
-      <div class="flex items-center justify-between rounded-lg border border-border bg-muted/50 px-4 py-3">
-        <div>
-          <div class="text-sm font-semibold" id="tsSummaryName">—</div>
-          <button class="text-xs text-muted-foreground underline underline-offset-2 mt-0.5 bg-transparent border-none cursor-pointer p-0" onclick="closeSheet()">Изменить тариф</button>
+    <div class="sheet-body">
+      <!-- LEFT: tariff info -->
+      <div class="sheet-left px-6 pb-6 flex flex-col gap-5">
+        <!-- Tariff summary -->
+        <div class="flex items-center justify-between rounded-lg border border-border bg-muted/50 px-4 py-3">
+          <div>
+            <div class="text-sm font-semibold" id="tsSummaryName">—</div>
+            <button class="text-xs text-muted-foreground underline underline-offset-2 mt-0.5 bg-transparent border-none cursor-pointer p-0" onclick="closeSheet()">Изменить тариф</button>
+          </div>
+          <div class="text-base font-bold text-brand" id="tsSummaryPrice"></div>
         </div>
-        <div class="text-base font-bold text-brand" id="tsSummaryPrice"></div>
+
+        <!-- Contract toggle -->
+        <div id="contractToggle" hidden>
+          <p class="text-xs font-medium text-muted-foreground mb-2">Тип подключения</p>
+          <div class="flex flex-col gap-2">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="radio" name="contractType" id="ctContract" value="contract" checked onchange="setPayment('contract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
+              <span class="text-sm">С контрактом на 3 года <span class="text-brand font-medium">−50% в первый месяц</span></span>
+            </label>
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="radio" name="contractType" id="ctNoContract" value="nocontract" onchange="setPayment('nocontract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
+              <span class="text-sm">Без контракта</span>
+            </label>
+          </div>
+        </div>
       </div>
 
-      <!-- Contract toggle -->
-      <div id="contractToggle" hidden>
-        <p class="text-xs font-medium text-muted-foreground mb-2">Тип подключения</p>
-        <div class="flex flex-col gap-2">
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="radio" name="contractType" id="ctContract" value="contract" checked onchange="setPayment('contract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
-            <span class="text-sm">С контрактом на 3 года <span class="text-brand font-medium">−50% в первый месяц</span></span>
-          </label>
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="radio" name="contractType" id="ctNoContract" value="nocontract" onchange="setPayment('nocontract')" style="accent-color:hsl(var(--brand));width:1rem;height:1rem;flex-shrink:0">
-            <span class="text-sm">Без контракта</span>
-          </label>
-        </div>
-      </div>
-
-      <hr class="separator">
+      <!-- RIGHT: form -->
+      <div class="sheet-right px-6 pb-6">
 
       <form id="appForm" novalidate class="flex flex-col gap-4">
         <div>
@@ -458,8 +509,9 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
           Отправляя заявку, вы соглашаетесь на обработку персональных данных и их передачу АО «Казахтелеком» для подключения услуг
         </p>
       </form>
-    </div>
-  </div>
+      </div><!-- /sheet-right -->
+    </div><!-- /sheet-body -->
+  </div><!-- /formView -->
 
   <!-- SUCCESS VIEW -->
   <div id="successView" class="hidden flex-col items-center text-center gap-5 px-6 py-10">
