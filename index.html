@@ -1,4 +1,16 @@
 <title>Интернет Казахтелеком — BI Group</title>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113887104', 'ym');
+    ym(113887104, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/113887104" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=Geologica:wght@400;500;600;700;800;900&display=swap">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -317,8 +329,8 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
   <div class="flex justify-center mb-10">
     <div class="tabs-list" id="speedTabs" role="tablist">
       <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
-      <button class="tab-trigger" onclick="setSpeed(300,this)" role="tab">300 МБ/с</button>
       <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
+      <button class="tab-trigger" onclick="setSpeed(100,this)" role="tab">100 МБ/с</button>
     </div>
   </div>
 
@@ -485,30 +497,33 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3pjElGpg3l6_icEEoir15Ga3uYRNcSOltMLbQYAIS-t4Ri3TdTp3YoN5u8uM9_WrBhQ/exec';
 
 const TARIFFS = [
-  { id:'bereket4', name:'BEREKET 4', speed:500, badge:'Топовый', contract:16999, nocontract:17999, discount:true,
-    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 150+ каналов, 8 онлайн-кинотеатров'},{t:'📱',n:'Мобильная связь',v:'4 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
-  { id:'bereket2', name:'BEREKET 2', speed:500, badge:'Популярный', contract:12999, nocontract:13999, discount:true,
-    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 150+ каналов, 8 онлайн-кинотеатров'},{t:'📱',n:'Мобильная связь',v:'2 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
-  { id:'keremet_mobile', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:10999, discount:true,
-    features:[{t:'📶',n:'Интернет',v:'500 Мб/с, безлимит'},{t:'📱',n:'Мобильная связь',v:'1 SIM: 100/60 ГБ Activ/Altel, безлимит внутри, 250 мин на другие сети'}] },
-  { id:'keremet_tv', name:'KEREMET TV', speed:300, contract:8999, nocontract:9999, discount:true,
-    features:[{t:'📶',n:'Интернет',v:'300 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'TV+, 160 каналов, 8 онлайн-кинотеатров'}] },
-  { id:'januya', name:'JANUYA', speed:200, badge:'Акция', promo:9999,
-    features:[{t:'📶',n:'Интернет',v:'200 Мб/с, безлимит'},{t:'📺',n:'Телевидение',v:'84 телеканала'},{t:'📱',n:'Мобильная связь',v:'от 2 до 7 SIM по 60 ГБ, безлимит внутри Activ и Altel'}] },
-  { id:'vygodny', name:'ВЫГОДНЫЙ', speed:200, badge:'Акция', promo:7999,
-    features:[{t:'📶',n:'Интернет',v:'200 Мб/с, безлимит'},{t:'📱',n:'Мобильная связь',v:'2 SIM по 60 ГБ'},{t:'🎁',n:'В подарок',v:'Смарт-часы'}] },
+  { id:'km26', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:9999,
+    features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Мобильная связь',v:'1 SIM: Kcell 100 ГБ / Altel 60 ГБ, безлимит внутри, 300 мин на другие сети, 100 СМС'}] },
+  { id:'b2', name:'BEREKET 2', speed:500, contract:12999, nocontract:12999, discount:true,
+    features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'2 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
+  { id:'b4', name:'BEREKET 4', speed:500, contract:16999, nocontract:16999, discount:true,
+    features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'4 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
+  { id:'i200a', name:'ИНТЕРНЕТ 200', speed:200, promo:3999,
+    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Акция',v:'Цена 3 999 ₸ действует 12 месяцев, затем 7 999 ₸/мес'}] },
+  { id:'ktv25', name:'KEREMET TV', speed:200, promo:5178,
+    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 3 онлайн-кинотеатра'},{n:'Акция',v:'Цена 5 178 ₸ действует 12 месяцев, затем 10 356 ₸/мес'}] },
+  { id:'gosmart', name:'GO SMART', speed:200, contract:7990, nocontract:7990,
+    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Мобильная связь',v:'2 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'},{n:'Подарок',v:'Смарт-часы при подключении'}] },
+  { id:'i100a', name:'ИНТЕРНЕТ 100', speed:100, promo:2999,
+    features:[{n:'Интернет',v:'100 Мб/с, безлимит'},{n:'Акция',v:'Цена 2 999 ₸ действует 6 месяцев, затем 5 799 ₸/мес'}] },
 ];
 
-let selectedId = TARIFFS[1].id;
+let selectedId = 'b2';
 let currentSpeed = 500;
-const RECOMMENDED = { 500: 'bereket2', 300: null, 200: null };
+const RECOMMENDED = { 500: 'b2', 200: 'gosmart', 100: 'i100a' };
 const DESCRIPTIONS = {
-  bereket4: 'Максимальный пакет — интернет, ТВ и 4 SIM‑карты',
-  bereket2: 'Интернет, ТВ и 2 SIM‑карты для всей семьи',
-  keremet_mobile: 'Интернет плюс мобильный пакет для одного',
-  keremet_tv: 'Интернет и 160 телеканалов TV+',
-  januya: 'Интернет с акционной ценой навсегда',
-  vygodny: 'Интернет, 2 SIM и смарт‑часы в подарок',
+  km26:    'Интернет 500 Мб/с и мобильный пакет для одного',
+  b2:      'Интернет, ТВ и 2 SIM‑карты для всей семьи',
+  b4:      'Максимальный пакет — интернет, ТВ и 4 SIM‑карты',
+  i200a:   'Акционная цена на первые 12 месяцев',
+  ktv25:   'Интернет, ТВ 160+ каналов, акционная цена на 12 месяцев',
+  gosmart: 'Интернет, 2 SIM‑карты и смарт‑часы в подарок',
+  i100a:   'Акционная цена на первые 6 месяцев',
 };
 const payment = {};
 TARIFFS.forEach(t => { payment[t.id] = t.discount ? 'contract' : 'promo'; });
