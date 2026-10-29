@@ -617,13 +617,7 @@ function selectTariff(id) {
 
 function selectAndOpen(id) { selectTariff(id); openSheet(id); }
 
-function updateStickyBar() {
-  const t = TARIFFS.find(x => x.id === selectedId);
-  if (!t) return;
-  document.getElementById('stickyName').textContent = t.name;
-  document.getElementById('stickyPrice').textContent = fmt(price(t)) + ' / мес';
-  const sb = document.getElementById('stickyBar'); if (sb && window.innerWidth < 640) sb.classList.add('visible');
-}
+function updateStickyBar() {}
 
 function openSheet(id) {
   if (id) selectTariff(id);
