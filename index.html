@@ -1,12 +1,12 @@
 <title>Интернет Казахтелеком — BI Group</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&family=Geologica:wght@400;500;600;700;800;900&display=swap">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script>
 tailwind.config = {
   darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
-    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], display: ['Geologica', 'system-ui', 'sans-serif'] },
     extend: {
       colors: {
         border:      'hsl(var(--border))',
@@ -35,11 +35,11 @@ tailwind.config = {
 <style>
 /* ── shadcn/ui design tokens ───────────────────────────── */
 :root {
-  --background:            0 0% 100%;
+  --background:            0 0% 94.5%;
   --foreground:            240 10% 3.9%;
   --card:                  0 0% 100%;
   --card-foreground:       240 10% 3.9%;
-  --primary:               240 5.9% 10%;
+  --primary:               0 0% 15.7%;
   --primary-foreground:    0 0% 98%;
   --secondary:             240 4.8% 95.9%;
   --secondary-foreground:  240 5.9% 10%;
@@ -52,7 +52,7 @@ tailwind.config = {
   --border:                240 5.9% 90%;
   --input:                 240 5.9% 90%;
   --ring:                  240 5.9% 10%;
-  --brand:                 221 83% 32%;
+  --brand:                 214 100% 50%;
   --brand-foreground:      0 0% 98%;
   --radius:                0.5rem;
 }
@@ -106,6 +106,9 @@ body {
   background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: 'Inter', system-ui, sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Geologica', system-ui, sans-serif;
   padding-left: max(0px, env(safe-area-inset-left, 0px));
   padding-right: max(0px, env(safe-area-inset-right, 0px));
   padding-block: 0;
@@ -148,6 +151,9 @@ body {
 .card-header  { padding: 1.5rem 1.5rem .75rem; }
 .card-content { padding: 0 1.5rem 1.5rem; }
 .card-footer  { padding: .75rem 1.5rem 1.5rem; display: flex; align-items: center; gap: .5rem; }
+/* Recommended card */
+.tariff-rec-banner { background: hsl(var(--brand)/.08); color: hsl(var(--brand)); border: 1px solid hsl(var(--brand)/.2); border-bottom: none; border-radius: var(--radius) var(--radius) 0 0; padding: .5rem 1.5rem; font-size: .8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: .375rem; }
+.card.recommended { border-radius: 0 0 var(--radius) var(--radius); border-color: hsl(var(--brand)/.35); }
 
 /* Badge */
 .badge        { display: inline-flex; align-items: center; border-radius: 9999px; border: 1px solid transparent; padding: .2rem .6rem; font-size: .75rem; font-weight: 600; line-height: 1; }
@@ -177,17 +183,17 @@ body {
 .label { display: block; font-size: .875rem; font-weight: 500; line-height: 1; color: hsl(var(--foreground)); margin-bottom: .5rem; }
 
 /* Tabs (shadcn style) */
-.tabs-list { display: inline-flex; height: 2.5rem; align-items: center; justify-content: center; border-radius: var(--radius); background: hsl(var(--muted)); padding: .25rem; gap: .25rem; }
+.tabs-list { display: inline-flex; height: 2.25rem; align-items: center; justify-content: center; border-radius: calc(var(--radius) + 2px); background: hsl(var(--muted)); padding: .25rem; }
 .tab-trigger {
   display: inline-flex; align-items: center; justify-content: center;
-  white-space: nowrap; border-radius: calc(var(--radius) - 4px);
-  padding: .375rem .75rem; font-size: .875rem; font-weight: 500;
+  white-space: nowrap; border-radius: var(--radius);
+  padding: .375rem .875rem; font-size: .875rem; font-weight: 500;
   background: transparent; border: none; cursor: pointer;
   color: hsl(var(--muted-foreground)); transition: all .15s;
 }
 .tab-trigger.active, .tab-trigger[data-state="active"] {
-  background: hsl(var(--background)); color: hsl(var(--foreground));
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);
+  background: hsl(var(--card)); color: hsl(var(--foreground));
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / .08);
 }
 
 /* Separator */
@@ -256,30 +262,29 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
   <div style="height: env(safe-area-inset-top,0); position:fixed; inset:0 0 auto; background:hsl(var(--background)); z-index:31"></div>
   <div class="max-w-5xl mx-auto flex h-14 items-center justify-between px-4">
     <div class="flex items-center gap-3">
-      <div class="flex h-8 w-8 items-center justify-center rounded-md bg-brand text-brand-foreground font-bold text-xs flex-shrink-0">KT</div>
-      <div class="flex flex-col leading-tight">
-        <span class="text-sm font-semibold text-foreground">Казахтелеком</span>
-        <span class="text-xs text-muted-foreground">для жителей BI Group</span>
-      </div>
+      <!-- BI Group wordmark first -->
+      <svg height="22" width="99" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115 28" aria-label="BI Group"><g clip-path="url(#clip0_6020_2820)"><mask id="mask0_6020_2820" style="mask-type: luminance;" maskUnits="userSpaceOnUse" x="0" y="0" width="115" height="28"><path d="M115 0H0V28H115V0Z" fill="white"></path></mask><g mask="url(#mask0_6020_2820)"><path d="M45.6446 21.9496C44.4476 21.9496 43.3598 21.7486 42.3812 21.3452C41.4026 20.9432 40.5663 20.386 39.8738 19.6763C39.18 18.9666 38.6437 18.1322 38.2636 17.173C37.8835 16.2137 37.6941 15.1714 37.6941 14.0431V14.0001C37.6941 12.9314 37.8876 11.9139 38.2746 10.9478C38.6616 9.98162 39.2048 9.13608 39.9056 8.41113C40.6064 7.68618 41.4413 7.11232 42.413 6.68677C43.3833 6.26261 44.4462 6.05054 45.599 6.05054C46.2707 6.05054 46.8803 6.09766 47.4276 6.19331C47.975 6.28895 48.4822 6.42479 48.9494 6.59945C49.4166 6.77549 49.8589 6.99172 50.2736 7.24677C50.5321 7.40618 50.7878 7.58083 51.038 7.77212C51.2923 7.9648 51.331 8.32657 51.1264 8.57053L50.1271 9.76539C49.9391 9.98994 49.6087 10.0288 49.3752 9.85133C49.2134 9.72935 49.0503 9.61568 48.8845 9.50757C48.5776 9.30935 48.2569 9.13747 47.9211 8.99192C47.5852 8.84638 47.2161 8.73549 46.8153 8.66202C46.4145 8.58856 45.9722 8.55113 45.4911 8.55113C44.7904 8.55113 44.1366 8.6939 43.5312 8.97945C42.9258 9.26499 42.3991 9.65311 41.9541 10.1438C41.509 10.6345 41.1579 11.2098 40.9036 11.8682C40.6479 12.5266 40.5207 13.2225 40.5207 13.9543V13.9987C40.5207 14.7888 40.6451 15.5221 40.8925 16.1943C41.1399 16.868 41.4952 17.446 41.9554 17.9298C42.4157 18.4135 42.9631 18.7947 43.5975 19.072C44.2319 19.3506 44.9438 19.4892 45.733 19.4892C46.4628 19.4892 47.1456 19.3825 47.7801 19.1704C48.3109 18.993 48.7836 18.767 49.1968 18.4912C49.3475 18.3914 49.4332 18.2167 49.4332 18.0351V15.4694H46.0661C45.7607 15.4694 45.5133 15.2213 45.5133 14.9149V13.6522C45.5133 13.3458 45.7607 13.0977 46.0661 13.0977H51.4872C51.7926 13.0977 52.0401 13.3458 52.0401 13.6522V19.2896C52.0401 19.4573 51.9668 19.6181 51.8369 19.7234C51.5121 19.9854 51.161 20.2363 50.7809 20.4775C50.3206 20.7714 49.8244 21.0264 49.2922 21.2468C48.7587 21.4658 48.1865 21.6391 47.5728 21.7625C46.959 21.8872 46.3177 21.9496 45.6459 21.9496H45.6446Z" fill="currentColor"></path><path d="M54.6677 6.8683C54.6677 6.56196 54.9152 6.31384 55.2206 6.31384H61.5C62.4634 6.31384 63.3176 6.44969 64.0626 6.71998C64.8076 6.99028 65.4283 7.36731 65.9245 7.85107C66.3336 8.27662 66.6474 8.76731 66.8658 9.32315C67.0842 9.87899 67.1947 10.4944 67.1947 11.1681V11.2125C67.1947 12.4711 66.8547 13.4857 66.176 14.2536C65.6467 14.8525 64.9998 15.3113 64.2368 15.6301C63.9037 15.7687 63.7765 16.1721 63.9852 16.4659L67.0759 20.8115C67.3371 21.1788 67.0759 21.6875 66.6266 21.6875H64.7883C64.6086 21.6875 64.44 21.6002 64.3363 21.4533L60.9001 16.5643C60.7965 16.4174 60.6278 16.3301 60.4482 16.3301H57.3617V21.1344C57.3617 21.4408 57.1143 21.6889 56.8088 21.6889H55.2206C54.9152 21.6889 54.6677 21.4408 54.6677 21.1344V6.86969V6.8683ZM61.3024 13.9335C62.2658 13.9335 63.0329 13.7034 63.601 13.2418C64.1705 12.7802 64.4552 12.155 64.4552 11.3635V11.3206C64.4552 10.4861 64.1774 9.85266 63.6231 9.42157C63.0688 8.98909 62.2879 8.77424 61.2802 8.77424H57.9132C57.6077 8.77424 57.3603 9.02236 57.3603 9.32869V13.3818C57.3603 13.6881 57.6077 13.9362 57.9132 13.9362H61.3024V13.9335Z" fill="currentColor"></path><path d="M76.9379 21.9495C75.7548 21.9495 74.6753 21.7402 73.6967 21.3244C72.7181 20.9071 71.879 20.3402 71.1783 19.6222C70.4775 18.9055 69.9301 18.0669 69.5362 17.1077C69.1423 16.1485 68.9446 15.1283 68.9446 14.0444V14.0014C68.9446 12.9174 69.1409 11.8972 69.5362 10.938C69.9301 9.97881 70.4844 9.13742 71.2004 8.41247C71.915 7.68752 72.7623 7.11366 73.7409 6.68812C74.7181 6.26396 75.799 6.05188 76.9822 6.05188C78.1653 6.05188 79.2449 6.26119 80.2235 6.67703C81.2021 7.09426 82.0411 7.66119 82.7418 8.37921C83.4426 9.09723 83.99 9.93446 84.3839 10.8937C84.7778 11.8529 84.9755 12.8731 84.9755 13.957V14.0014C84.9755 15.0853 84.7792 16.1055 84.3839 17.0647C83.99 18.024 83.4357 18.8653 82.7197 19.5903C82.0037 20.3152 81.1578 20.8905 80.1792 21.3147C79.2006 21.7388 78.1211 21.9523 76.9379 21.9523V21.9495ZM76.9808 19.4461C77.7396 19.4461 78.4376 19.3034 79.0721 19.0178C79.7079 18.7323 80.2511 18.3483 80.7031 17.8646C81.1551 17.3808 81.5103 16.8111 81.7646 16.1513C82.0203 15.4929 82.1489 14.7901 82.1489 14.043V14C82.1489 13.2529 82.0203 12.5501 81.7646 11.8917C81.5089 11.2333 81.1523 10.6539 80.692 10.1562C80.2318 9.65861 79.6802 9.26634 79.0389 8.98079C78.3962 8.69525 77.6954 8.55248 76.9366 8.55248C76.1777 8.55248 75.4797 8.69525 74.8453 8.98079C74.2095 9.26634 73.6662 9.65029 73.2143 10.1341C72.7623 10.6178 72.4071 11.1875 72.1527 11.8473C71.897 12.5057 71.7698 13.2085 71.7698 13.9556V14C71.7698 14.7457 71.897 15.4485 72.1527 16.1083C72.4084 16.7667 72.7664 17.3461 73.2253 17.8438C73.6856 18.3414 74.2357 18.7337 74.8784 19.0178C75.5212 19.3034 76.2206 19.4461 76.9808 19.4461Z" fill="currentColor"></path><path d="M93.6462 21.9274C92.6538 21.9274 91.7554 21.7846 90.9523 21.4991C90.1492 21.2135 89.4636 20.7852 88.8942 20.2141C88.3247 19.643 87.8865 18.9375 87.5797 18.0947C87.2728 17.2533 87.1194 16.2761 87.1194 15.163V6.86695C87.1194 6.56062 87.3668 6.3125 87.6723 6.3125H89.2605C89.5659 6.3125 89.8133 6.56062 89.8133 6.86695V15.0535C89.8133 16.4882 90.1561 17.5763 90.8431 18.3137C91.5287 19.0539 92.4782 19.4226 93.6904 19.4226C94.9026 19.4226 95.8287 19.0678 96.5157 18.3581C97.2026 17.6484 97.5454 16.5838 97.5454 15.163V6.86695C97.5454 6.56062 97.7928 6.3125 98.0983 6.3125H99.6865C99.9919 6.3125 100.239 6.56062 100.239 6.86695V15.0313C100.239 16.1735 100.082 17.1771 99.768 18.0393C99.4543 18.9042 99.012 19.6236 98.4439 20.203C97.8744 20.7811 97.1847 21.2135 96.3747 21.4991C95.5647 21.7846 94.6552 21.9274 93.649 21.9274H93.6462Z" fill="currentColor"></path><path d="M103.062 6.8683C103.062 6.56196 103.309 6.31384 103.615 6.31384H109.106C109.996 6.31384 110.804 6.43444 111.526 6.67563C112.249 6.91682 112.862 7.26474 113.366 7.71939C113.871 8.17404 114.256 8.71464 114.527 9.34394C114.797 9.97325 114.932 10.676 114.932 11.4523V11.4952C114.932 12.3602 114.772 13.117 114.45 13.7685C114.129 14.42 113.691 14.9661 113.137 15.4041C112.581 15.8435 111.933 16.1762 111.188 16.4036C110.444 16.6309 109.648 16.7431 108.801 16.7431H105.757V21.1303C105.757 21.4366 105.51 21.6847 105.204 21.6847H103.616C103.311 21.6847 103.063 21.4366 103.063 21.1303V6.86553L103.062 6.8683ZM108.886 14.2855C109.908 14.2855 110.715 14.0305 111.307 13.5204C111.898 13.0103 112.194 12.3533 112.194 11.5521V11.5091C112.194 10.6053 111.894 9.92335 111.296 9.46315C110.697 9.00434 109.894 8.77424 108.886 8.77424H106.307C106.002 8.77424 105.754 9.02236 105.754 9.32869V13.7325C105.754 14.0388 106.002 14.2869 106.307 14.2869H108.886V14.2855Z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M32.1211 14C32.1211 16.0432 31.8447 18.0849 31.2863 20.1281C30.3712 23.5061 27.2723 26.4933 23.3054 27.2681C20.9045 27.738 18.498 27.9764 16.093 27.9764C13.6879 27.9764 11.2857 27.7394 8.88476 27.2681C4.91228 26.4933 1.81336 23.5061 0.898338 20.1281C0.345453 18.0849 0.067627 16.0432 0.067627 14C0.067627 11.9568 0.344071 9.91504 0.898338 7.87188C1.81336 4.49386 4.91228 1.50673 8.88476 0.731874C11.2857 0.261973 13.6921 0.0235596 16.093 0.0235596C18.4939 0.0235596 20.9045 0.260587 23.3054 0.731874C27.2723 1.50673 30.3726 4.49386 31.2863 7.87188C31.8447 9.91504 32.1211 11.9568 32.1211 14ZM7.69189 7.07068C7.69189 6.65206 8.02915 6.31384 8.44658 6.31384H14.5684C16.3349 6.31384 17.6715 6.7685 18.5768 7.67503C19.2624 8.36394 19.6066 9.21226 19.6066 10.2228V10.2671C19.6066 10.7356 19.5444 11.1501 19.42 11.5077C19.2956 11.8667 19.1352 12.1814 18.9376 12.4517C18.7413 12.722 18.5063 12.9604 18.2368 13.1655C17.9673 13.3707 17.6922 13.5467 17.4157 13.6923C17.8677 13.8544 18.281 14.0402 18.6528 14.2523C19.0246 14.4643 19.3467 14.718 19.6162 15.0105C19.8858 15.303 20.0945 15.6481 20.241 16.0432C20.3861 16.4382 20.4594 16.8998 20.4594 17.4265V17.4709C20.4594 18.1598 20.3239 18.7669 20.0544 19.2936C19.7849 19.8204 19.4006 20.2598 18.9044 20.6119C18.4082 20.9639 17.8097 21.2301 17.1089 21.4131C16.4081 21.596 15.6341 21.6875 14.7882 21.6875H8.44796C8.03053 21.6875 7.69327 21.3493 7.69327 20.9307V7.07068H7.69189ZM16.9112 10.6622C16.9112 10.0481 16.6804 9.5685 16.2215 9.22335C15.7612 8.87959 15.0936 8.70771 14.2173 8.70771H11.0949C10.6775 8.70771 10.3402 9.04592 10.3402 9.46454V12.0358C10.3402 12.4544 10.6775 12.7927 11.0949 12.7927H14.0197C14.896 12.7927 15.5968 12.6208 16.122 12.277C16.6472 11.9333 16.9099 11.4093 16.9099 10.7065V10.6622H16.9112ZM17.7655 17.141C17.7655 16.4826 17.5056 15.9738 16.9873 15.6148C16.4689 15.2558 15.6769 15.077 14.6112 15.077H11.0949C10.6775 15.077 10.3402 15.4152 10.3402 15.8338V18.5368C10.3402 18.9554 10.6775 19.2936 11.0949 19.2936H14.8075C15.7267 19.2936 16.4496 19.1176 16.9748 18.7669C17.5001 18.4148 17.7641 17.8881 17.7641 17.1853V17.141H17.7655ZM23.7449 6.31384H22.5603C22.1429 6.31384 21.8057 6.65206 21.8057 7.07068V20.9307C21.8057 21.3493 22.1429 21.6875 22.5603 21.6875H23.7449C24.1623 21.6875 24.4996 21.3493 24.4996 20.9307V7.07068C24.4996 6.65206 24.1623 6.31384 23.7449 6.31384Z" fill="currentColor"></path></g></g><defs><clipPath id="clip0_6020_2820"><rect width="115" height="28" fill="white"></rect></clipPath></defs></svg>
+      <!-- × separator -->
+      <span style="color:hsl(var(--muted-foreground));opacity:.4;font-size:14px;line-height:1;user-select:none">×</span>
+      <!-- Kazakhtelecom logo — viewBox cropped to content area -->
+      <svg height="22" width="190" xmlns="http://www.w3.org/2000/svg" viewBox="61 159 909 107" preserveAspectRatio="xMidYMid meet" aria-label="Kazakhtelecom">
+        <g transform="translate(0,463) scale(0.1,-0.1)" fill="currentColor" stroke="none">
+<path d="M1102 3035 c-35 -8 -88 -25 -118 -39 -61 -28 -174 -104 -174 -117 0 -5 136 -9 301 -9 l302 0 36 33 c21 17 51 42 67 53 l29 21 -40 17 c-129 55 -272 69 -403 41z"/><path d="M1724 3035 c-127 -35 -125 -40 17 -36 186 5 329 -26 429 -94 27 -18 73 -44 103 -58 29 -13 70 -39 92 -58 61 -54 26 1 -49 75 -72 71 -164 128 -256 157 -85 28 -262 35 -336 14z"/><path d="M1523 2870 c-75 -4 -107 -9 -118 -21 -15 -15 -2 -17 157 -22 184 -6 292 -24 435 -72 166 -56 337 -150 348 -192 3 -13 9 -23 14 -23 18 0 92 -57 117 -90 l26 -35 -6 70 c-7 77 -28 156 -51 192 -9 13 -43 37 -77 54 -202 102 -524 155 -845 139z"/><path d="M727 2788 c-33 -45 -68 -114 -60 -122 4 -3 142 -6 309 -6 l302 0 11 31 c6 16 24 50 41 75 16 25 30 47 30 50 0 2 -137 4 -304 4 l-305 0 -24 -32z"/><path d="M1311 2651 c-19 -3 -36 -11 -38 -17 -3 -8 43 -14 144 -18 289 -14 555 -88 751 -208 105 -64 142 -98 142 -128 0 -19 11 -36 41 -59 22 -19 49 -46 58 -63 l18 -29 20 48 c26 61 40 107 48 159 l6 41 -139 71 c-265 134 -517 192 -897 205 -66 3 -135 2 -154 -2z"/><path d="M3963 2640 c-76 -16 -104 -42 -118 -107 l-7 -33 56 0 c49 0 56 3 56 19 0 47 92 69 130 31 38 -38 16 -77 -45 -82 -37 -3 -40 -5 -43 -35 -3 -32 -2 -33 32 -33 62 0 86 -15 86 -54 0 -41 -20 -56 -74 -56 -48 0 -85 19 -92 47 -7 25 -35 36 -80 31 -26 -3 -29 -7 -26 -32 4 -39 36 -82 75 -103 18 -9 64 -18 102 -21 136 -8 215 36 215 123 0 37 -5 51 -26 70 -15 14 -33 25 -40 25 -8 0 -14 5 -14 10 0 6 4 10 10 10 22 0 50 45 50 80 0 42 -20 75 -58 94 -36 18 -137 27 -189 16z"/><path d="M7589 2635 c-90 -29 -136 -113 -126 -234 9 -111 75 -178 185 -188 149 -13 241 68 242 215 0 94 -35 163 -103 198 -42 22 -144 26 -198 9z m155 -105 c16 -16 21 -36 24 -95 4 -72 3 -75 -26 -105 -39 -38 -88 -41 -129 -6 -24 21 -28 32 -31 92 -3 77 9 111 48 132 32 17 88 8 114 -18z"/><path d="M2930 2431 l0 -211 55 0 55 0 0 65 c0 52 4 69 20 85 12 12 25 18 29 15 5 -2 33 -41 62 -85 44 -68 56 -80 80 -80 26 0 43 -21 38 -46 -5 -29 3 -35 39 -32 l37 3 0 60 c0 54 -2 60 -22 63 -15 2 -46 36 -93 99 -38 52 -70 98 -70 102 0 3 34 40 75 81 41 41 75 78 75 82 0 5 -24 8 -54 8 l-55 0 -73 -80 c-40 -44 -76 -80 -80 -80 -4 0 -8 35 -10 78 l-3 77 -52 3 -53 3 0 -210z"/><path d="M3509 2613 c-65 -169 -139 -372 -139 -382 0 -8 16 -11 53 -9 49 3 53 5 62 36 l9 32 78 0 77 0 9 -32 c8 -32 10 -33 66 -36 45 -2 57 0 54 10 -94 255 -143 386 -151 396 -5 6 -31 12 -58 12 -45 0 -51 -3 -60 -27z m107 -241 c-2 -2 -24 -2 -48 0 l-44 3 24 80 25 80 23 -80 c12 -44 21 -81 20 -83z"/><path d="M4441 2623 c-10 -19 -151 -392 -151 -400 0 -2 26 -3 57 -1 55 3 58 4 67 36 l9 32 73 0 74 0 14 -35 c14 -33 17 -35 65 -35 42 0 51 3 50 18 0 9 -33 103 -73 207 l-72 190 -51 3 c-42 2 -54 0 -62 -15z m82 -176 l25 -77 -50 0 c-36 0 -48 4 -45 13 3 6 13 42 23 79 10 37 19 66 21 65 1 -1 13 -37 26 -80z"/><path d="M4784 2627 c-2 -7 -3 -100 -2 -207 l3 -195 53 -3 52 -3 0 60 c0 48 4 65 23 87 l24 27 59 -86 c49 -71 64 -86 89 -89 27 -3 30 -7 33 -40 3 -37 4 -38 43 -38 l40 0 -3 62 c-3 54 -6 63 -25 68 -21 5 -153 175 -153 197 0 6 34 44 75 86 41 41 75 78 75 81 0 3 -27 6 -59 6 l-59 0 -73 -80 c-39 -44 -76 -80 -80 -80 -5 0 -9 36 -9 80 l0 80 -50 0 c-32 0 -52 -5 -56 -13z"/><path d="M5225 2630 c-9 -14 5 -73 19 -82 6 -4 32 -8 59 -8 l47 0 0 -160 0 -160 55 0 55 0 0 160 c0 121 3 160 13 162 6 0 32 1 57 2 l45 1 3 48 3 47 -175 0 c-108 0 -177 -4 -181 -10z"/><path d="M5670 2430 l0 -210 173 2 172 3 0 40 0 40 -117 3 -118 3 0 39 0 40 100 0 100 0 0 40 0 40 -100 0 -100 0 0 35 0 34 113 3 112 3 3 48 3 47 -170 0 -171 0 0 -210z"/><path d="M6158 2492 c-3 -166 -9 -182 -64 -182 -34 0 -34 -1 -34 -45 l0 -45 56 0 c110 0 145 49 148 213 2 59 7 101 14 105 6 4 31 6 56 4 l46 -4 0 -159 0 -159 55 0 55 0 -2 208 -3 207 -162 3 -161 2 -4 -148z"/><path d="M6610 2430 l0 -210 173 2 172 3 0 40 0 40 -117 3 -118 3 0 39 0 40 100 0 100 0 0 40 0 40 -100 0 -100 0 0 35 0 34 113 3 112 3 3 48 3 47 -170 0 -171 0 0 -210z"/><path d="M7049 2578 c-1 -35 -1 -128 -1 -208 l1 -145 47 -3 c57 -4 65 6 57 68 -5 39 -2 50 20 75 l25 29 33 -48 c96 -138 81 -126 155 -126 64 0 66 1 53 19 -8 11 -47 64 -86 119 -40 55 -73 103 -73 108 0 5 34 43 75 84 41 41 75 78 75 82 0 5 -27 8 -59 8 l-59 0 -72 -80 c-40 -44 -77 -77 -82 -74 -5 3 -8 38 -6 77 l3 72 -52 3 -53 3 -1 -63z"/><path d="M7970 2430 l0 -210 50 0 49 0 3 153 3 152 43 -135 c24 -74 46 -143 48 -152 4 -13 16 -18 39 -18 l34 0 41 133 c23 72 45 141 50 152 5 13 9 -36 9 -132 l1 -153 50 0 50 0 0 210 0 210 -75 0 -74 0 -9 -32 c-5 -18 -24 -84 -42 -146 l-34 -114 -14 49 c-7 26 -27 92 -43 146 l-30 97 -74 0 -75 0 0 -210z"/><path d="M630 2584 c-6 -14 -13 -50 -16 -80 l-7 -54 310 0 310 0 7 51 c4 29 10 65 13 80 l6 29 -307 0 -306 0 -10 -26z"/><path d="M1240 2426 c0 -10 16 -17 48 -21 240 -29 344 -53 497 -114 166 -66 385 -203 385 -240 0 -10 21 -39 47 -65 45 -45 47 -46 67 -29 53 45 129 140 122 151 -7 12 -122 80 -203 121 -84 42 -201 88 -298 117 -233 71 -665 123 -665 80z"/><path d="M615 2343 c4 -31 11 -67 16 -80 l9 -23 305 0 c193 0 305 4 305 10 0 5 -5 41 -12 80 l-12 70 -309 0 -309 0 7 -57z"/><path d="M1273 2216 c4 -10 7 -20 7 -22 0 -2 10 -4 23 -4 37 0 167 -30 247 -56 167 -56 399 -196 392 -237 -2 -9 7 -31 20 -48 21 -28 27 -30 65 -25 45 6 183 70 183 85 0 13 -188 122 -310 180 -159 75 -345 122 -548 138 -79 6 -85 5 -79 -11z"/><path d="M660 2185 c0 -11 33 -70 62 -112 l29 -43 304 0 c168 0 305 2 305 5 0 2 -11 20 -25 40 -13 21 -32 54 -42 76 l-17 39 -308 0 c-169 0 -308 -2 -308 -5z"/><path d="M1404 2001 c11 -12 31 -21 48 -21 43 0 178 -48 216 -76 17 -14 32 -32 32 -41 0 -12 -8 -14 -47 -9 -47 6 -48 6 -17 -8 82 -37 281 -62 272 -33 -8 22 -108 85 -192 120 -78 33 -199 67 -291 83 l-40 7 19 -22z"/><path d="M810 1973 c2 -24 153 -114 240 -143 136 -45 291 -37 438 21 46 19 68 39 42 39 -5 0 -34 20 -64 45 l-56 45 -300 0 c-165 0 -300 -3 -300 -7z"/>
+        </g>
+      </svg>
     </div>
     <button class="btn btn-default hidden sm:inline-flex" onclick="openSheet(null)">Оформить заявку</button>
   </div>
 </header>
 
 <!-- ── HERO ──────────────────────────────────────────────────────── -->
-<section class="border-b border-border bg-muted/30">
+<section class="bg-muted/30">
   <div class="max-w-5xl mx-auto px-4 py-16 flex flex-col items-start gap-6 md:py-24">
-    <div class="flex items-center gap-2">
-      <span class="badge badge-brand">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand mr-1.5 animate-pulse inline-block"></span>
-        Сеть проведена в дом
-      </span>
-    </div>
     <h1 class="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
       Интернет уже<br>в вашем доме
     </h1>
     <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
-      Осталось выбрать тариф. Подключение бесплатное, данные заполнятся автоматически из BIG&nbsp;App.
+      Просто выберите тариф. Подключение бесплатно.
     </p>
     <div class="flex flex-wrap items-center gap-3">
       <button class="btn btn-brand btn-lg" onclick="scrollToTariffs()">Выбрать тариф</button>
@@ -294,31 +299,28 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
         <svg class="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         Скидка 50% в первый месяц
       </div>
-      <div class="flex items-center gap-2 text-sm text-muted-foreground">
-        <svg class="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-        Данные из BIG App
-      </div>
     </div>
   </div>
 </section>
 
 <!-- ── TARIFFS ────────────────────────────────────────────────────── -->
 <section class="max-w-5xl mx-auto px-4 py-14" id="tariffs">
-  <div class="flex flex-col gap-2 mb-8">
-    <h2 class="text-2xl font-bold tracking-tight">Тарифы</h2>
-    <p class="text-muted-foreground">Все тарифы включают безлимитный интернет</p>
+  <div class="flex flex-col items-center text-center gap-2 mb-10">
+    <h2 class="text-2xl font-bold tracking-tight">Выберите тариф</h2>
+    <p class="text-muted-foreground">Все тарифы включают безлимитный интернет и бесплатное подключение</p>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs-list mb-8 flex-wrap h-auto gap-1" id="filterTabs" role="tablist">
-    <button class="tab-trigger active" data-filter="all" onclick="setFilter('all',this)" role="tab">Все</button>
-    <button class="tab-trigger" data-filter="contract" onclick="setFilter('contract',this)" role="tab">С контрактом</button>
-    <button class="tab-trigger" data-filter="nocontract" onclick="setFilter('nocontract',this)" role="tab">Без контракта</button>
-    <button class="tab-trigger" data-filter="promo" onclick="setFilter('promo',this)" role="tab">Акции</button>
+  <!-- Speed segmented control -->
+  <div class="flex justify-center mb-10">
+    <div class="tabs-list" id="speedTabs" role="tablist">
+      <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
+      <button class="tab-trigger" onclick="setSpeed(300,this)" role="tab">300 МБ/с</button>
+      <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
+    </div>
   </div>
 
   <!-- Cards -->
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="tariffGrid"></div>
+  <div id="tariffGrid"></div>
 
   <!-- Equipment note -->
   <div class="alert mt-6 flex gap-3 items-start">
@@ -330,34 +332,12 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
   </div>
 </section>
 
-<hr class="separator max-w-5xl mx-auto">
-
-<!-- ── MANAGER ────────────────────────────────────────────────────── -->
-<section class="max-w-5xl mx-auto px-4 py-14">
-  <div class="card max-w-md">
-    <div class="card-header flex items-center gap-4 pb-4">
-      <div class="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-2xl flex-shrink-0">👩‍💼</div>
-      <div>
-        <p class="font-semibold">Гульдана</p>
-        <p class="text-sm text-muted-foreground">Менеджер Казахтелекома</p>
-      </div>
-    </div>
-    <div class="card-content">
-      <p class="text-sm text-muted-foreground mb-4">Поможет выбрать тариф и ответит на вопросы</p>
-      <a href="https://wa.me/77000000000" class="btn btn-default w-full justify-center gap-2" target="_blank" rel="noopener" style="text-decoration:none">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Написать в WhatsApp
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
-<footer class="border-t border-border">
+<footer class="">
   <div class="max-w-5xl mx-auto px-4 py-8 flex flex-wrap items-center justify-between gap-4">
-    <p class="text-sm text-muted-foreground">Услуги оказывает АО «Казахтелеком». Заявку передаёт BI Group через BIG App.</p>
+    <p class="text-sm text-muted-foreground">Услуги оказывает АО «Казахтелеком». Предложение актуально для жителей BI Group.</p>
     <a href="https://wa.me/77000000000" class="text-sm text-muted-foreground hover:text-foreground transition-colors" target="_blank" rel="noopener">
-      Связаться с менеджером
+      Остались вопросы?
     </a>
   </div>
 </footer>
@@ -524,6 +504,16 @@ const TARIFFS = [
 ];
 
 let selectedId = TARIFFS[1].id;
+let currentSpeed = 500;
+const RECOMMENDED = { 500: 'bereket2', 300: null, 200: null };
+const DESCRIPTIONS = {
+  bereket4: 'Максимальный пакет — интернет, ТВ и 4 SIM‑карты',
+  bereket2: 'Интернет, ТВ и 2 SIM‑карты для всей семьи',
+  keremet_mobile: 'Интернет плюс мобильный пакет для одного',
+  keremet_tv: 'Интернет и 160 телеканалов TV+',
+  januya: 'Интернет с акционной ценой навсегда',
+  vygodny: 'Интернет, 2 SIM и смарт‑часы в подарок',
+};
 const payment = {};
 TARIFFS.forEach(t => { payment[t.id] = t.discount ? 'contract' : 'promo'; });
 
@@ -531,72 +521,69 @@ function fmt(n) { return n.toLocaleString('ru-RU') + ' ₸'; }
 function price(t) { return t.promo ? t.promo : payment[t.id]==='contract' ? t.contract : t.nocontract; }
 
 function renderCards() {
-  document.getElementById('tariffGrid').innerHTML = TARIFFS.map(t => {
+  const filtered = TARIFFS.filter(t => t.speed === currentSpeed);
+  const recId = RECOMMENDED[currentSpeed];
+  const grid = document.getElementById('tariffGrid');
+
+  grid.className = 'grid sm:grid-cols-3 gap-6';
+
+  const bannerH = '2.25rem';
+
+  grid.innerHTML = filtered.map((t, i) => {
+    const colStart = filtered.length === 1 ? 'grid-column:2' : '';
     const p = price(t);
     const sel = t.id === selectedId;
-    const priceLine = t.promo
-      ? `<p class="text-xs text-muted-foreground">Акционная цена</p>`
-      : `<p class="text-xs text-muted-foreground">${payment[t.id]==='contract' ? 'С контрактом 3 года' : 'Без контракта'}</p>`;
-    const altLine = t.discount
-      ? `<p class="text-xs text-muted-foreground mt-0.5">${payment[t.id]==='contract' ? 'Без контракта: '+fmt(t.nocontract) : 'С контрактом: '+fmt(t.contract)+' — скидка 50%'}</p>`
-      : '';
-    const discountBadge = t.discount && payment[t.id]==='contract'
-      ? `<span class="badge badge-brand text-[10px]">−50% в 1‑й мес.</span>` : '';
-    return `
-      <div class="card tariff-card cursor-pointer transition-all hover:shadow-md ${sel ? 'selected' : ''} flex flex-col"
-           id="card-${t.id}" data-id="${t.id}"
-           onclick="selectTariff('${t.id}')"
-           role="radio" aria-checked="${sel}" tabindex="0"
-           onkeydown="if(event.key==='Enter'||event.key===' ')selectTariff('${t.id}')">
-        <div class="card-header pb-3">
-          <div class="flex items-start justify-between gap-2 mb-2">
-            <p class="font-bold text-base leading-tight">${t.name}</p>
-            ${t.badge ? `<span class="badge badge-secondary flex-shrink-0">${t.badge}</span>` : ''}
+    const isRec = t.id === recId;
+    const priceNote = t.promo ? 'Акционная цена' : 'С контрактом 3 года';
+    const discount = t.discount && !t.promo
+      ? `<p class="text-xs text-brand font-medium mt-1">−50% в первый месяц</p>` : '';
+    const feats = t.features.map(f => `
+      <div class="flex items-start gap-2 text-sm">
+        <svg class="w-4 h-4 text-brand flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <span><span class="font-medium">${f.n}:</span> ${f.v}</span>
+      </div>`).join('');
+
+    const inner = `
+      <div class="card-header pb-3">
+        <p class="font-bold text-lg tracking-tight">${t.name}</p>
+        <p class="text-sm text-muted-foreground mt-1">${DESCRIPTIONS[t.id] || ''}</p>
+      </div>
+      <div class="card-content flex flex-col gap-5">
+        <div>
+          <p class="text-xs text-muted-foreground">${priceNote}</p>
+          <div class="flex items-end gap-1 mt-0.5">
+            <span class="font-bold tracking-tight" style="font-size:2.5rem;line-height:1;font-family:'Geologica',sans-serif">${fmt(p)}</span>
+            <span class="text-muted-foreground mb-1 ml-0.5">/мес</span>
           </div>
-          <p class="text-xs text-muted-foreground">${t.speed} Мб/с · безлимит</p>
+          ${discount}
         </div>
-        <hr class="separator mx-6">
-        <div class="card-content flex-1 flex flex-col gap-3 pt-4">
-          <div class="flex flex-col gap-2">
-            ${t.features.map(f => `
-              <div class="flex gap-2 items-start">
-                <span class="text-base leading-none mt-0.5 flex-shrink-0">${f.t}</span>
-                <div class="min-w-0">
-                  <p class="text-xs font-medium text-muted-foreground uppercase tracking-wide" style="font-size:.68rem">${f.n}</p>
-                  <p class="text-sm">${f.v}</p>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-          <div class="mt-auto pt-3 border-t border-border">
-            ${priceLine}
-            <div class="flex items-baseline gap-1 mt-0.5">
-              <span class="text-2xl font-bold tracking-tight" style="font-variant-numeric:tabular-nums">${fmt(p)}</span>
-              <span class="text-sm text-muted-foreground">/ мес</span>
-            </div>
-            ${discountBadge}
-            ${altLine}
-          </div>
-          <button class="btn btn-default w-full justify-center mt-1" onclick="event.stopPropagation();selectAndOpen('${t.id}')">
-            Оформить заявку
-          </button>
-        </div>
+        <button class="btn ${isRec ? 'btn-brand' : 'btn-outline'} w-full justify-center"
+                onclick="event.stopPropagation();selectAndOpen('${t.id}')">
+          Оформить заявку
+        </button>
+        <div class="flex flex-col gap-2.5 border-t border-border pt-4">${feats}</div>
       </div>`;
+
+    if (isRec) {
+      return `<div style="${colStart};display:flex;flex-direction:column">
+        <div class="tariff-rec-banner">⚡ Рекомендуем</div>
+        <div class="card recommended ${sel?'selected':''}" id="card-${t.id}" data-id="${t.id}"
+             onclick="selectTariff('${t.id}')" role="radio" aria-checked="${sel}" tabindex="0" style="cursor:pointer;flex:1">${inner}</div>
+      </div>`;
+    }
+    return `<div style="${colStart};padding-top:${bannerH};display:flex;flex-direction:column">
+      <div class="card tariff-card cursor-pointer hover:shadow-md transition-all ${sel?'selected':''}"
+           id="card-${t.id}" data-id="${t.id}"
+           onclick="selectTariff('${t.id}')" role="radio" aria-checked="${sel}" tabindex="0" style="flex:1">${inner}</div>
+    </div>`;
   }).join('');
 }
 
-function setFilter(f, btn) {
-  document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
+function setSpeed(speed, btn) {
+  currentSpeed = speed;
+  document.querySelectorAll('#speedTabs .tab-trigger').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  TARIFFS.forEach(t => {
-    const el = document.getElementById('card-' + t.id);
-    if (!el) return;
-    let show = true;
-    if (f==='contract')   show = !!t.contract;
-    if (f==='nocontract') show = !!t.nocontract;
-    if (f==='promo')      show = !!t.promo;
-    el.hidden = !show;
-  });
+  renderCards();
 }
 
 function selectTariff(id) {
