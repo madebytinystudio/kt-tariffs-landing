@@ -312,7 +312,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 
-/* ── Dark hero ──────────────────────────────────────────────────── */
+/* ── Dark hero (light mode only) ───────────────────────────────── */
 .above-fold {
   background: hsl(222 47% 7%);
   position: relative;
@@ -339,8 +339,26 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 .above-fold header .btn-default:hover { background: hsl(0 0% 92%); }
 .hero-headline { color: white; }
 .hero-sub { color: hsl(222 20% 65%) !important; }
-/* pin-drop on dark: whiter fill */
+/* pin-drop on dark: lighter stroke */
 .above-fold .pin-path { fill: hsl(214 100% 50% / .15) !important; stroke: hsl(214 100% 72%) !important; }
+
+/* In system dark mode — reset hero to page background */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .above-fold { background: transparent; }
+  :root:not([data-theme="light"]) .above-fold header svg[aria-label="Kazakhtelecom"] { color: hsl(var(--foreground)); }
+  :root:not([data-theme="light"]) .above-fold header .btn-default { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+  :root:not([data-theme="light"]) .above-fold header .btn-default:hover { background: hsl(var(--primary) / .9); filter: none; }
+  :root:not([data-theme="light"]) .hero-headline { color: hsl(var(--foreground)); }
+  :root:not([data-theme="light"]) .hero-sub { color: hsl(var(--muted-foreground)) !important; }
+  :root:not([data-theme="light"]) .above-fold .pin-path { fill: hsl(var(--brand) / .15) !important; stroke: hsl(var(--brand)) !important; }
+}
+:root[data-theme="dark"] .above-fold { background: transparent; }
+:root[data-theme="dark"] .above-fold header svg[aria-label="Kazakhtelecom"] { color: hsl(var(--foreground)); }
+:root[data-theme="dark"] .above-fold header .btn-default { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+:root[data-theme="dark"] .above-fold header .btn-default:hover { background: hsl(var(--primary) / .9); filter: none; }
+:root[data-theme="dark"] .hero-headline { color: hsl(var(--foreground)); }
+:root[data-theme="dark"] .hero-sub { color: hsl(var(--muted-foreground)) !important; }
+:root[data-theme="dark"] .above-fold .pin-path { fill: hsl(var(--brand) / .15) !important; stroke: hsl(var(--brand)) !important; }
 </style>
 
 <!-- ── ABOVE FOLD ─────────────────────────────────────────────── -->
