@@ -273,9 +273,10 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 1rem;
     transform: translate(-50%, calc(-50% + 24px));
     opacity: 0;
+    pointer-events: none;
     transition: transform .3s cubic-bezier(.32,.72,0,1), opacity .25s;
   }
-  .sheet.open { transform: translate(-50%, -50%); opacity: 1; }
+  .sheet.open { transform: translate(-50%, -50%); opacity: 1; pointer-events: auto; }
   .sheet-drag-handle { display: none; }
   .sheet-body { display: grid; grid-template-columns: 1fr 1fr; }
   .sheet-left { padding: 0 1.5rem 1.5rem; border-right: 1px solid hsl(var(--border)); display: flex; flex-direction: column; gap: 1.25rem; }
