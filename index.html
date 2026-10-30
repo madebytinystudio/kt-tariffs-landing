@@ -189,6 +189,12 @@ h1, h2, h3, h4, h5, h6 {
 .input:focus { border-color: hsl(var(--ring)); box-shadow: 0 0 0 2px hsl(var(--ring) / .15); }
 .input.error { border-color: hsl(var(--destructive)); }
 .select-wrap { position: relative; }
+.input-prefix-wrap { display: flex; align-items: stretch; border-radius: var(--radius); border: 1px solid hsl(var(--input)); background: hsl(var(--background)); transition: border-color .15s; }
+.input-prefix-wrap:focus-within { border-color: hsl(var(--ring)); box-shadow: 0 0 0 2px hsl(var(--ring) / .15); }
+.input-prefix-wrap.error { border-color: hsl(var(--destructive)); }
+.input-prefix { display: flex; align-items: center; padding: 0 .5rem 0 .75rem; font-size: .875rem; color: hsl(var(--muted-foreground)); white-space: nowrap; user-select: none; }
+.input-prefix-wrap .input { border: none; background: transparent; box-shadow: none; padding-left: 0; flex: 1; }
+.input-prefix-wrap .input:focus { border: none; box-shadow: none; }
 .select-wrap select.input { appearance: none; padding-right: 2rem; cursor: pointer; }
 .select-wrap::after { content: ""; position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); pointer-events: none; width: 1rem; height: 1rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
 
@@ -490,7 +496,10 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
         <div>
           <label class="label" for="fPhone">Номер для звонка</label>
-          <input class="input" id="fPhone" name="phone" type="tel" inputmode="numeric" placeholder="700 000 00 00" autocomplete="tel">
+          <div class="input-prefix-wrap" id="phoneWrap">
+            <span class="input-prefix">+7</span>
+            <input class="input" id="fPhone" name="phone" type="tel" inputmode="numeric" placeholder="700 000 00 00" autocomplete="tel">
+          </div>
           <div class="err-text" id="ePhone">Введите номер в формате 7XX XXX XX XX</div>
         </div>
 
@@ -769,7 +778,11 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   ok = setErr('fIin','eIin', !/^\d{12}$/.test(data.iin)) && ok;
   ok = setErr('fZk','eZk', !data.zk) && ok;
   ok = setErr('fFlat','eFlat', !data.flat.trim()) && ok;
-  ok = setErr('fPhone','ePhone', !/^7\d{9}$/.test(data.phone.replace(/\D/g,''))) && ok;
+  const phoneOk = /^7\d{9}$/.test(data.phone.replace(/\D/g,''));
+  document.getElementById('phoneWrap').classList.toggle('error', !phoneOk);
+  document.getElementById('fPhone').classList.toggle('error', !phoneOk);
+  document.getElementById('ePhone').classList.toggle('show', !phoneOk);
+  ok = phoneOk && ok;
   if (!ok) return;
 
   const btn = document.getElementById('submitBtn');
