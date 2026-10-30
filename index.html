@@ -226,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile carousel / desktop grid for tariff cards */
 .tariff-grid { display: flex; gap: 1.5rem; padding: .5rem; margin: -.5rem; overflow-x: auto; scrollbar-width: none; }
 .tariff-grid::-webkit-scrollbar { display: none; }
-.tariff-grid > * { flex: 0 0 calc((100% - (var(--cols, 3) - 1) * 1.5rem) / var(--cols, 3)); min-width: 0; }
+.tariff-grid > * { flex: 0 0 var(--card-w, calc((100% - 3rem) / 3)); min-width: 0; }
 @media (max-width: 639px) {
   .tariff-grid {
     display: flex; overflow-x: auto; gap: 12px;
@@ -662,7 +662,8 @@ function renderCards() {
   const grid = document.getElementById('tariffGrid');
 
   grid.className = 'tariff-grid';
-  grid.style.setProperty('--cols', filtered.length);
+  const n = filtered.length;
+  grid.style.setProperty('--card-w', `calc((100% - ${(n-1) * 1.5}rem) / ${n})`);
 
   const bannerH = '2.25rem';
 
