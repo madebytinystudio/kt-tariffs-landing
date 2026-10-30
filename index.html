@@ -444,7 +444,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
     <div class="tabs-list" id="speedTabs" role="tablist">
       <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
       <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
-      <button class="tab-trigger" onclick="setSpeed(100,this)" role="tab">100 МБ/с</button>
+      <button class="tab-trigger" onclick="setSpeed(1000,this)" role="tab">1000 МБ/с</button>
     </div>
   </div>
 
@@ -619,31 +619,34 @@ const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3pjElGpg3l6_icEEoir
 const TARIFFS = [
   { id:'km26', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:9999,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Мобильная связь',v:'1 SIM: Kcell 100 ГБ / Altel 60 ГБ, безлимит внутри, 300 мин на другие сети, 100 СМС'}] },
+  { id:'b2s', name:'BACK TO SCHOOL', speed:500, contract:12990, nocontract:12990,
+    features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'18 каналов, 9 онлайн-кинотеатров'},{n:'Мобильная связь',v:'1 SIM Kcell 40 ГБ, безлимит внутри, 250 мин, 100 СМС'}] },
   { id:'b2', name:'BEREKET 2', speed:500, contract:12999, nocontract:12999, discount:true,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'2 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
   { id:'b4', name:'BEREKET 4', speed:500, contract:16999, nocontract:16999, discount:true,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'4 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
-  { id:'i200a', name:'ИНТЕРНЕТ 200', speed:200, promo:3999,
-    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Акция',v:'Цена 3 999 ₸ действует 12 месяцев, затем 7 999 ₸/мес'}] },
-  { id:'ktv25', name:'KEREMET TV', speed:200, promo:5178,
-    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 3 онлайн-кинотеатра'},{n:'Акция',v:'Цена 5 178 ₸ действует 12 месяцев, затем 10 356 ₸/мес'}] },
+  { id:'ktv25', name:'KEREMET TV PROMO', speed:200, promo:5178,
+    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 3 онлайн-кинотеатра'},{n:'Акция',v:'5 178 ₸/мес первые 12 месяцев, затем 10 356 ₸/мес'}] },
   { id:'gosmart', name:'GO SMART', speed:200, contract:7990, nocontract:7990,
     features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Мобильная связь',v:'2 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'},{n:'Подарок',v:'Смарт-часы при подключении'}] },
-  { id:'i100a', name:'ИНТЕРНЕТ 100', speed:100, promo:2999,
-    features:[{n:'Интернет',v:'100 Мб/с, безлимит'},{n:'Акция',v:'Цена 2 999 ₸ действует 6 месяцев, затем 5 799 ₸/мес'}] },
+  { id:'jan2', name:'JANUYA 2', speed:200, contract:9999, nocontract:9999,
+    features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Телевидение',v:'86 каналов, 2 онлайн-кинотеатра'},{n:'Мобильная связь',v:'2–7 SIM по 60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
+  { id:'i1000', name:'ИНТЕРНЕТ 1000', speed:1000, contract:20611, nocontract:20611,
+    features:[{n:'Интернет',v:'до 1000 Мб/с, безлимит'}] },
 ];
 
 let selectedId = 'b2';
 let currentSpeed = 500;
-const RECOMMENDED = { 500: 'b2', 200: 'gosmart', 100: 'i100a' };
+const RECOMMENDED = { 500: 'b2', 200: 'gosmart', 1000: 'i1000' };
 const DESCRIPTIONS = {
   km26:    'Интернет 500 Мб/с и мобильный пакет для одного',
+  b2s:     'Интернет, ТВ и мобильный пакет по акционной цене',
   b2:      'Интернет, ТВ и 2 SIM‑карты для всей семьи',
   b4:      'Максимальный пакет — интернет, ТВ и 4 SIM‑карты',
-  i200a:   'Акционная цена на первые 12 месяцев',
-  ktv25:   'Интернет, ТВ 160+ каналов, акционная цена на 12 месяцев',
+  ktv25:   'Интернет и ТВ 160+ каналов, акционная цена на 12 месяцев',
   gosmart: 'Интернет, 2 SIM‑карты и смарт‑часы в подарок',
-  i100a:   'Акционная цена на первые 6 месяцев',
+  jan2:    'Интернет, ТВ и мобильная связь для большой семьи',
+  i1000:   'Максимальная скорость — до 1000 Мб/с',
 };
 const payment = {};
 TARIFFS.forEach(t => { payment[t.id] = t.discount ? 'contract' : 'promo'; });
