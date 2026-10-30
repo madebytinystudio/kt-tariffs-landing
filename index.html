@@ -224,7 +224,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 639px) { .header-cta { display: none !important; } }
 
 /* Mobile carousel / desktop grid for tariff cards */
-.tariff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; padding: .5rem; margin: -.5rem; }
+.tariff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 1.5rem; padding: .5rem; margin: -.5rem; }
 @media (max-width: 639px) {
   .tariff-grid {
     display: flex; overflow-x: auto; gap: 12px;
