@@ -311,10 +311,42 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 .step-dot { width: 1.5rem; height: 1.5rem; border-radius: 9999px; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); font-size: .7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+
+/* ── Dark hero ──────────────────────────────────────────────────── */
+.above-fold {
+  background: hsl(222 47% 7%);
+  position: relative;
+  overflow: hidden;
+}
+/* Blue radial glow behind the illustration */
+.above-fold::before {
+  content: '';
+  position: absolute;
+  right: 12%;
+  top: 55%;
+  transform: translate(50%, -50%);
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(214 100% 50% / .18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.above-fold header { background: transparent; }
+.above-fold header svg[aria-label="Kazakhtelecom"] { color: white; }
+.above-fold header .btn-default {
+  background: white;
+  color: hsl(222 47% 10%);
+}
+.above-fold header .btn-default:hover { background: hsl(0 0% 92%); }
+.hero-headline { color: white; }
+.hero-sub { color: hsl(222 20% 65%) !important; }
+/* pin-drop on dark: whiter fill */
+.above-fold .pin-path { fill: hsl(214 100% 50% / .15) !important; stroke: hsl(214 100% 72%) !important; }
 </style>
 
+<!-- ── ABOVE FOLD ─────────────────────────────────────────────── -->
+<div class="above-fold">
 <!-- ── HEADER ─────────────────────────────────────────────────── -->
-<header class="w-full bg-background">
+<header class="w-full">
   <div class="max-w-5xl mx-auto flex h-14 items-center justify-between px-4">
     <div class="flex items-center gap-3">
       <!-- Kazakhtelecom logo — viewBox cropped to content area -->
@@ -332,10 +364,10 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 <section>
   <div class="max-w-5xl mx-auto px-4 py-16 md:py-24" style="display:flex;align-items:center;justify-content:space-between;gap:2rem">
     <div class="flex flex-col items-start gap-2">
-      <h1 class="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
+      <h1 class="hero-headline text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl max-w-2xl" style="text-wrap:balance; line-height:1.1">
         Интернет уже<br>в вашем доме
       </h1>
-      <p class="text-lg text-muted-foreground max-w-xl leading-relaxed">
+      <p class="hero-sub text-lg text-muted-foreground max-w-xl leading-relaxed">
         Осталось подобрать подходящий тариф
       </p>
     </div>
@@ -350,6 +382,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
     </div>
   </div>
 </section>
+</div><!-- /above-fold -->
 <script>
 (function() {
   function initPin() {
