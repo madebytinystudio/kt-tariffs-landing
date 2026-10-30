@@ -226,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Mobile carousel / desktop grid for tariff cards */
 .tariff-grid { display: flex; gap: 1.5rem; padding: .5rem; margin: -.5rem; overflow-x: auto; scrollbar-width: none; }
 .tariff-grid::-webkit-scrollbar { display: none; }
-.tariff-grid > * { flex: 0 0 var(--card-w, calc((100% - 3rem) / 3)); min-width: 0; }
+.tariff-grid > * { flex: 0 0 calc((100% - 3rem) / 3); min-width: 0; }
 @media (max-width: 639px) {
   .tariff-grid {
     display: flex; overflow-x: auto; gap: 12px;
@@ -447,6 +447,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
       <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
       <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
       <button class="tab-trigger" onclick="setSpeed(1000,this)" role="tab">1000 МБ/с</button>
+      <button class="tab-trigger" onclick="setSpeed('promo',this)" role="tab">Акционный</button>
     </div>
   </div>
 
@@ -621,7 +622,7 @@ const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3pjElGpg3l6_icEEoir
 const TARIFFS = [
   { id:'km26', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:9999,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Мобильная связь',v:'1 SIM: Kcell 100 ГБ / Altel 60 ГБ, безлимит внутри, 300 мин на&nbsp;другие сети, 100 СМС'}] },
-  { id:'b2s', name:'BACK TO SCHOOL', speed:500, contract:12990, nocontract:12990,
+  { id:'b2s', name:'BACK TO SCHOOL', speed:500, contract:12990, nocontract:12990, promo_tab:true,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'18 каналов, 2 онлайн-кинотеатра'},{n:'Мобильная связь',v:'1 SIM Kcell 40 ГБ, безлимит внутри, 250 мин, 100 СМС'},{n:'Подарок',v:'Планшет при&nbsp;подключении'}] },
   { id:'b2', name:'BEREKET 2', speed:500, contract:12999, nocontract:12999, discount:true,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'2 SIM по&nbsp;60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
@@ -639,7 +640,7 @@ const TARIFFS = [
 
 let selectedId = 'b2';
 let currentSpeed = 500;
-const RECOMMENDED = { 500: 'b2', 200: 'gosmart' };
+const RECOMMENDED = { 500: 'b2', 200: 'gosmart', promo: 'b2s' };
 const DESCRIPTIONS = {
   km26:    'Интернет 500 Мб/с и&nbsp;мобильный пакет для&nbsp;одного',
   b2s:     'Интернет, ТВ и&nbsp;мобильный пакет по&nbsp;акционной цене',
@@ -657,13 +658,13 @@ function fmt(n) { return n.toLocaleString('ru-RU') + ' ₸'; }
 function price(t) { return t.promo ? t.promo : payment[t.id]==='contract' ? t.contract : t.nocontract; }
 
 function renderCards() {
-  const filtered = TARIFFS.filter(t => t.speed === currentSpeed);
+  const filtered = currentSpeed === 'promo'
+    ? TARIFFS.filter(t => t.promo_tab)
+    : TARIFFS.filter(t => t.speed === currentSpeed && !t.promo_tab);
   const recId = RECOMMENDED[currentSpeed];
   const grid = document.getElementById('tariffGrid');
 
   grid.className = 'tariff-grid';
-  const n = filtered.length;
-  grid.style.setProperty('--card-w', `calc((100% - ${(n-1) * 1.5}rem) / ${n})`);
 
   const bannerH = '2.25rem';
 
