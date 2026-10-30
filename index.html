@@ -695,7 +695,7 @@ function renderCards() {
           </div>
           ${discount}
         </div>
-        <button class="btn ${isRec ? 'btn-brand' : 'btn-outline'} w-full justify-center"
+        <button class="btn ${isRec || t.badge ? 'btn-brand' : 'btn-outline'} w-full justify-center"
                 onclick="selectAndOpen('${t.id}')">
           Оформить заявку
         </button>
