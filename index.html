@@ -849,7 +849,7 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   const data = {
     date: new Date().toLocaleString('ru-RU'),
     fio: v('fFio'), iin: v('fIin'), zk: v('fZk'),
-    flat: v('fFlat'), block: v('fBlock'), phone: '+7' + v('fPhone').replace(/\D/g,''),
+    flat: v('fFlat'), block: v('fBlock'), phone: (function(){ const d=v('fPhone').replace(/\D/g,''); return '+7'+(d.startsWith('7')?d.slice(1):d); })(),
     tariff: t ? t.name : '', price: t ? fmt(price(t)) : '',
     payment: t ? (t.promo ? 'акция' : payment[t.id]==='contract' ? 'контракт' : 'без контракта') : ''
   };
@@ -858,7 +858,7 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   ok = setErr('fIin','eIin', !/^\d{12}$/.test(data.iin)) && ok;
   ok = setErr('fZk','eZk', !data.zk) && ok;
   ok = setErr('fFlat','eFlat', !data.flat.trim()) && ok;
-  const phoneOk = /^7\d{9}$/.test(data.phone.replace(/\D/g,''));
+  const phoneOk = /^\d{10}$/.test(data.phone.replace(/\D/g,''));
   document.getElementById('phoneWrap').classList.toggle('error', !phoneOk);
   document.getElementById('fPhone').classList.toggle('error', !phoneOk);
   document.getElementById('ePhone').classList.toggle('show', !phoneOk);
