@@ -190,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
 .input.error { border-color: hsl(var(--destructive)); }
 .select-wrap { position: relative; }
 .select-wrap select.input { appearance: none; padding-right: 2rem; cursor: pointer; }
-.select-wrap::after { content: "⌄"; position: absolute; right: .75rem; top: 50%; transform: translateY(-52%); pointer-events: none; font-size: .9rem; color: hsl(var(--muted-foreground)); }
+.select-wrap::after { content: ""; position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); pointer-events: none; width: 1rem; height: 1rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
 
 /* Label */
 .label { display: block; font-size: .875rem; font-weight: 500; line-height: 1; color: hsl(var(--foreground)); margin-bottom: .5rem; }
@@ -414,7 +414,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
   <!-- FORM VIEW -->
   <div id="formView">
-    <div class="flex items-center justify-between px-6 pt-4 pb-2">
+    <div class="flex items-center justify-between px-6 pt-4 pb-2" style="position:sticky;top:0;z-index:2;background:hsl(var(--background));border-bottom:1px solid hsl(var(--border));">
       <h2 id="sheetTitle" class="text-lg font-semibold">Заявка на подключение</h2>
       <button class="btn btn-ghost btn-icon rounded-full text-muted-foreground hover:text-foreground" onclick="closeSheet()" aria-label="Закрыть">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -455,7 +455,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
       <form id="appForm" novalidate class="flex flex-col gap-4">
         <div>
           <label class="label" for="fFio">ФИО</label>
-          <input class="input" id="fFio" name="fio" type="text" placeholder="Иванов Иван Иванович" autocomplete="name">
+          <input class="input" id="fFio" name="fio" type="text" placeholder="Введите ваши данные" autocomplete="name">
           <div class="err-text" id="eFio">Укажите фамилию и имя</div>
         </div>
 
@@ -493,8 +493,8 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
 
         <div>
           <label class="label" for="fPhone">Номер для звонка</label>
-          <input class="input" id="fPhone" name="phone" type="tel" inputmode="tel" placeholder="+7 700 000 00 00" autocomplete="tel">
-          <div class="err-text" id="ePhone">Введите номер в формате +7 7XX XXX XX XX</div>
+          <input class="input" id="fPhone" name="phone" type="tel" inputmode="numeric" placeholder="700 000 00 00" autocomplete="tel">
+          <div class="err-text" id="ePhone">Введите номер в формате 7XX XXX XX XX</div>
         </div>
 
         <div class="hidden rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-sm text-destructive" id="netErr">
@@ -706,6 +706,48 @@ function setPayment(mode) {
 
 function scrollToTariffs() { document.getElementById('tariffs').scrollIntoView({behavior:'smooth'}); }
 
+// Phone mask: auto-format as 7XX XXX XX XX
+(function() {
+  function fmtPhone(raw) {
+    const d = raw.replace(/\D/g, '').slice(0, 10);
+    if (d.length === 0) return '';
+    let out = d[0];
+    if (d.length > 1) out += d[1];
+    if (d.length > 2) out += d[2] + ' ';
+    if (d.length > 3) out += d[3];
+    if (d.length > 4) out += d[4];
+    if (d.length > 5) out += d[5] + ' ';
+    if (d.length > 6) out += d[6];
+    if (d.length > 7) out += d[7] + ' ';
+    if (d.length > 8) out += d[8];
+    if (d.length > 9) out += d[9];
+    return out;
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const ph = document.getElementById('fPhone');
+    if (!ph) return;
+    ph.addEventListener('input', function(e) {
+      const sel = ph.selectionStart;
+      const prev = ph.value;
+      const formatted = fmtPhone(ph.value);
+      ph.value = formatted;
+      // restore cursor roughly
+      const diff = formatted.length - prev.length;
+      ph.setSelectionRange(sel + diff, sel + diff);
+    });
+    ph.addEventListener('keydown', function(e) {
+      if (e.key === 'Backspace' && ph.selectionStart === ph.selectionEnd) {
+        const pos = ph.selectionStart;
+        if (pos > 0 && /\s/.test(ph.value[pos - 1])) {
+          e.preventDefault();
+          ph.value = ph.value.slice(0, pos - 2) + ph.value.slice(pos);
+          ph.setSelectionRange(pos - 2, pos - 2);
+        }
+      }
+    });
+  });
+})();
+
 // Validation helpers
 function setErr(inputId, errId, cond, msg) {
   const inp = document.getElementById(inputId);
@@ -721,7 +763,7 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   const data = {
     date: new Date().toLocaleString('ru-RU'),
     fio: v('fFio'), iin: v('fIin'), zk: v('fZk'),
-    flat: v('fFlat'), block: v('fBlock'), phone: v('fPhone'),
+    flat: v('fFlat'), block: v('fBlock'), phone: '+7' + v('fPhone').replace(/\D/g,''),
     tariff: t ? t.name : '', price: t ? fmt(price(t)) : '',
     payment: t ? (t.promo ? 'акция' : payment[t.id]==='contract' ? 'контракт' : 'без контракта') : ''
   };
@@ -730,7 +772,7 @@ document.getElementById('appForm').addEventListener('submit', async e => {
   ok = setErr('fIin','eIin', !/^\d{12}$/.test(data.iin)) && ok;
   ok = setErr('fZk','eZk', !data.zk) && ok;
   ok = setErr('fFlat','eFlat', !data.flat.trim()) && ok;
-  ok = setErr('fPhone','ePhone', !/^\+7\s?7\d{2}[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/.test(data.phone)) && ok;
+  ok = setErr('fPhone','ePhone', !/^7\d{9}$/.test(data.phone.replace(/\D/g,''))) && ok;
   if (!ok) return;
 
   const btn = document.getElementById('submitBtn');
