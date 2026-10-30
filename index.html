@@ -446,8 +446,7 @@ input[type="checkbox"] { accent-color: hsl(var(--primary)); width: 1rem; height:
     <div class="tabs-list" id="speedTabs" role="tablist">
       <button class="tab-trigger" onclick="setSpeed(200,this)" role="tab">200 МБ/с</button>
       <button class="tab-trigger active" onclick="setSpeed(500,this)" role="tab">500 МБ/с</button>
-      <button class="tab-trigger" onclick="setSpeed(1000,this)" role="tab">1000 МБ/с</button>
-      <button class="tab-trigger" onclick="setSpeed('promo',this)" role="tab">Акционный</button>
+      <button class="tab-trigger" onclick="setSpeed('other',this)" role="tab">Другие</button>
     </div>
   </div>
 
@@ -622,7 +621,7 @@ const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3pjElGpg3l6_icEEoir
 const TARIFFS = [
   { id:'km26', name:'KEREMET MOBILE', speed:500, contract:9999, nocontract:9999,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Мобильная связь',v:'1 SIM: Kcell 100 ГБ / Altel 60 ГБ, безлимит внутри, 300 мин на&nbsp;другие сети, 100 СМС'}] },
-  { id:'b2s', name:'BACK TO SCHOOL', speed:500, contract:12990, nocontract:12990, promo_tab:true,
+  { id:'b2s', name:'BACK TO SCHOOL', speed:500, contract:12990, nocontract:12990, promo_tab:true, badge:{label:'Back to School', color:'hsl(35 95% 48%)'},
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'18 каналов, 2 онлайн-кинотеатра'},{n:'Мобильная связь',v:'1 SIM Kcell 40 ГБ, безлимит внутри, 250 мин, 100 СМС'},{n:'Подарок',v:'Планшет при&nbsp;подключении'}] },
   { id:'b2', name:'BEREKET 2', speed:500, contract:12999, nocontract:12999, discount:true,
     features:[{n:'Интернет',v:'500 Мб/с, безлимит'},{n:'Телевидение',v:'160+ каналов, 10 онлайн-кинотеатров'},{n:'Мобильная связь',v:'2 SIM по&nbsp;60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
@@ -634,13 +633,13 @@ const TARIFFS = [
     features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Мобильная связь',v:'2 SIM по&nbsp;60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'},{n:'Подарок',v:'Смарт-часы при&nbsp;подключении'}] },
   { id:'jan2', name:'JANUYA 2', speed:200, contract:9999, nocontract:9999,
     features:[{n:'Интернет',v:'200 Мб/с, безлимит'},{n:'Телевидение',v:'86 каналов, 2 онлайн-кинотеатра'},{n:'Мобильная связь',v:'2–7 SIM по&nbsp;60 ГБ Kcell/Altel, безлимит внутри, 250 мин, 100 СМС'}] },
-  { id:'i1000', name:'ИНТЕРНЕТ 1000', speed:1000, contract:20611, nocontract:20611,
+  { id:'i1000', name:'ИНТЕРНЕТ 1000', speed:1000, contract:20611, nocontract:20611, badge:{label:'Самый быстрый', color:'hsl(271 65% 52%)'},
     features:[{n:'Интернет',v:'до&nbsp;1000 Мб/с, безлимит'}] },
 ];
 
 let selectedId = 'b2';
 let currentSpeed = 500;
-const RECOMMENDED = { 500: 'b2', 200: 'gosmart', promo: 'b2s' };
+const RECOMMENDED = { 500: 'b2', 200: 'gosmart' };
 const DESCRIPTIONS = {
   km26:    'Интернет 500 Мб/с и&nbsp;мобильный пакет для&nbsp;одного',
   b2s:     'Интернет, ТВ и&nbsp;мобильный пакет по&nbsp;акционной цене',
@@ -658,8 +657,8 @@ function fmt(n) { return n.toLocaleString('ru-RU') + ' ₸'; }
 function price(t) { return t.promo ? t.promo : payment[t.id]==='contract' ? t.contract : t.nocontract; }
 
 function renderCards() {
-  const filtered = currentSpeed === 'promo'
-    ? TARIFFS.filter(t => t.promo_tab)
+  const filtered = currentSpeed === 'other'
+    ? TARIFFS.filter(t => t.speed === 1000 || t.promo_tab)
     : TARIFFS.filter(t => t.speed === currentSpeed && !t.promo_tab);
   const recId = RECOMMENDED[currentSpeed];
   const grid = document.getElementById('tariffGrid');
@@ -703,9 +702,13 @@ function renderCards() {
         <div class="flex flex-col gap-2.5">${feats}</div>
       </div>`;
 
-    if (isRec) {
-      return `<div style="${colStart};display:flex;flex-direction:column;border-radius:1.25rem;background:hsl(var(--brand));padding:0 4px 4px">
-        <div class="tariff-rec-banner"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.5L5 13.5H11.5L10.5 21.5L19 10.5H12.5L13 2.5Z"/></svg> Популярное</div>
+    const activeBadge = isRec
+      ? { label: 'Популярное', color: 'hsl(var(--brand))', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.5L5 13.5H11.5L10.5 21.5L19 10.5H12.5L13 2.5Z"/></svg>' }
+      : t.badge ? { label: t.badge.label, color: t.badge.color, icon: '' } : null;
+
+    if (activeBadge) {
+      return `<div style="${colStart};display:flex;flex-direction:column;border-radius:1.25rem;background:${activeBadge.color};padding:0 4px 4px">
+        <div class="tariff-rec-banner">${activeBadge.icon}${activeBadge.icon?' ':''}${activeBadge.label}</div>
         <div class="card recommended ${sel?'selected':''}" id="card-${t.id}" data-id="${t.id}"
              onclick="selectAndOpen('${t.id}')" role="radio" aria-checked="${sel}" tabindex="0" style="cursor:pointer;flex:1">${inner}</div>
       </div>`;
